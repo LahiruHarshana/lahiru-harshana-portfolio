@@ -27,7 +27,7 @@ interface Social {
   id: number;
   name: string;
   href: string;
-  icon: JSX.Element;
+icon: React.ReactNode;
 }
 
 interface BlogPost {
