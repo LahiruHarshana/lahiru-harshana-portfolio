@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'Flaticon'; /* This name might vary based on your kit */
+  src: url('/fonts/flaticon.eot'); /* Adjust filename if different */
+  src: url('/fonts/flaticon.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/flaticon.woff2') format('woff2'),
+       url('/fonts/flaticon.woff') format('woff'),
+       url('/fonts/flaticon.ttf') format('truetype'),
+       url('/fonts/flaticon.svg#Flaticon') format('svg'); /* Adjust #Flaticon if needed */
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* The CSS file will also contain classes like .fi, .flaticon-laptop, etc. */
+/* For example: */
+.fi:before {
+    display: inline-block;
+    font-family: "Flaticon"; /* Ensure this matches font-family in @font-face */
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-decoration: inherit;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-laptop:before {
+  content: "\f101"; /* Example content code, yours will be specific */
+}
+/* ... other icon classes */
