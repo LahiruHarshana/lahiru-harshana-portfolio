@@ -4,6 +4,7 @@ import "./globals.css";
 import { Oswald } from 'next/font/google';
 import { Heebo } from 'next/font/google';
 import "./flaticon.css";
+import Head from "next/head";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -36,11 +37,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-<body className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}>
-<link
+
+        <Head>
+        <link rel="icon" href="data:," /> 
+        <link
           href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap"
           rel="stylesheet"
         />
+      </Head>
+<body className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}>
+
+
         {children}
       </body>
     </html>
