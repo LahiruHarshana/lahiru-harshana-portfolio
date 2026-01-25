@@ -909,19 +909,18 @@ const Home: FC<{}> = () => {
 
               <div className="mb-6">
                 <h4 className="text-lg font-semibold text-white mb-2">Address</h4>
-                <p className="text-gray-400 text-base sm:text-lg">245 King Street, Touterie Victoria 8520 Australia</p>
+                <p className="text-gray-400 text-base sm:text-lg">Weligama, Matara, Sri Lanka</p>
               </div>
 
               <div className="mb-6">
                 <h4 className="text-lg font-semibold text-white mb-2">Phone</h4>
-                <p className="text-gray-400 text-base sm:text-lg">0-123-456-7890</p>
-                <p className="text-gray-400 text-base sm:text-lg mt-1">0-123-456-7890</p>
+                <p className="text-gray-400 text-base sm:text-lg">+94 782902200</p>
               </div>
 
               <div>
                 <h4 className="text-lg font-semibold text-white mb-2">Email</h4>
                 <p className="text-gray-400 hover:text-sky-400 transition-colors duration-200 text-base sm:text-lg">
-                  <a href="mailto:sample@gmail.com">sample@gmail.com</a>
+                  <a href="mailto:lharshana2002@gmail.com">lharshana2002@gmail.com</a>
                 </p>
               </div>
             </div>
@@ -1003,10 +1002,66 @@ const Home: FC<{}> = () => {
               </form>
             </div>
           </div>
+
+          {/* Google Map */}
+          <div className="mt-16 w-full h-[300px] sm:h-[400px] rounded-lg overflow-hidden shadow-2xl relative z-10 border border-gray-800">
+            <iframe
+              title="Weligama Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31745.03423715102!2d80.41369527626949!3d5.973412351239924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae13fce224a919d%3A0xe542617f6942b08!2sWeligama!5e0!3m2!1sen!2slk!4v1706200000000!5m2!1sen!2slk"
+              width="100%"
+              height="100%"
+              style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </section>
 
-    </div >
+      <footer className="bg-[#0a0a0a] py-12 mt-20 border-t border-gray-900">
+        <div className="container mx-auto px-4 flex flex-col items-center justify-center">
+          {/* Logo / Brand Icon */}
+          <div className="mb-8">
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-white"
+            >
+              <path
+                d="M12 2L2 22H22L12 2Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
+          {/* Social Icons */}
+          <div className="flex gap-4 mb-8">
+            {socialLinks.map((social) => (
+              <a
+                key={social.id}
+                href={social.href}
+                className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-gray-400 hover:bg-white hover:text-black transition-all duration-300 border border-gray-800"
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
+
+          {/* Copyright */}
+          <p className="text-gray-500 text-sm">
+            Copyright © 2026 Lahiru Harshana. All Rights Reserved.
+          </p>
+        </div>
+      </footer>
+
+    </div>
   );
 };
 
