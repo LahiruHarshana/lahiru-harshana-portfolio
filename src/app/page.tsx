@@ -1019,8 +1019,13 @@ const Home: FC<{}> = () => {
         </div>
       </section>
 
-      <footer className="bg-[#0a0a0a] py-12 mt-20 border-t border-gray-900">
-        <div className="container mx-auto px-4 flex flex-col items-center justify-center">
+
+      <footer className="relative text-white py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60">
+        <div className="absolute top-0 bottom-0 w-px bg-white opacity-100 z-20 line-14 h-12"></div>
+        <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-11"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white opacity-30 z-10"></div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative z-10">
           {/* Logo / Brand Icon */}
           <div className="mb-8">
             <svg
@@ -1055,7 +1060,7 @@ const Home: FC<{}> = () => {
           </div>
 
           {/* Copyright */}
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 text-sm text-center">
             Copyright © 2026 Lahiru Harshana. All Rights Reserved.
           </p>
         </div>
