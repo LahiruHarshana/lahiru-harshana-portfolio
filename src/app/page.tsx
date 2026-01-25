@@ -190,24 +190,24 @@ const Home: FC<{}> = () => {
   const testimonialsData: Testimonial[] = [
     {
       id: 1,
-      text: "Lahiru delivered an exceptional e-commerce platform for our business. His technical expertise in React and Node.js, combined with his attention to detail, resulted in a highly scalable solution that exceeded our expectations.",
-      avatarSrc: "/dp5.jpg",
-      name: "David Kumar",
-      title: "CEO, TechRetail Solutions"
+      text: "Lahiru is an exceptional Project Manager. His ability to bridge the gap between technical requirements and business goals ensured our projects at EonTech were delivered on time and with top-notch quality. A true leader.",
+      avatarSrc: "/testimonials/eontech-ceo.png",
+      name: "Hirusha Jaayasinghe",
+      title: "CEO, EonTech Global Group"
     },
     {
       id: 2,
-      text: "Working with Lahiru on our mobile app was a fantastic experience. He understood our requirements perfectly and delivered a robust React Native application ahead of schedule. His problem-solving skills are remarkable.",
-      avatarSrc: "/dp2.jpg",
-      name: "Sarah Chen",
-      title: "Product Manager, FinTech Startup"
+      text: "Even as an intern, Lahiru showed the maturity and technical skill of a senior engineer. His dedication to learning and solving complex problems at Embracetec was impressive. A bright future awaits him.",
+      avatarSrc: "/testimonials/embracetec-ceo.jpg",
+      name: "Menith Somarathne",
+      title: "CEO, Embracetec"
     },
     {
       id: 3,
-      text: "Lahiru's backend engineering skills transformed our legacy system into a modern microservices architecture. His expertise in API design and database optimization significantly improved our application performance.",
-      avatarSrc: "/dp3.avif",
-      name: "Michael B.",
-      title: "CTO, Cloud Innovations"
+      text: "I've had the pleasure of knowing Lahiru both personally and professionally. As a Project Manager at LammastideIT, he brought incredible energy and organization. He makes managing complex software lifecycles look easy.",
+      avatarSrc: "/testimonials/lammastideit-ceo.jpg",
+      name: "Amith Hasintha",
+      title: "CEO, LammastideIT"
     },
   ];
   const currentTestimonial = testimonialsData[currentIndex];
@@ -215,50 +215,44 @@ const Home: FC<{}> = () => {
   const allPortfolioItemsData = [
     {
       id: 1,
-      src: "https://htmlburger.com/blog/wp-content/uploads/2023/04/modern-website-design-examples.jpg",
-      alt: "E-Commerce Platform",
+      src: "/work/project-1.png",
+      alt: "E-Commerce Web App",
       category: "Web Applications"
     },
     {
       id: 2,
-      src: "https://z-p3-scontent.fcmb7-1.fna.fbcdn.net/v/t39.30808-6/495304246_559930727161542_1826639213272179947_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEAw0cOlxMlnQ4tHcvwQ0iGDyv17BFII_kPK_XsEUgj-dMalUQHzEwe1J0zlmskRkAfR6RqXF_7oiB17flDRcNT&_nc_ohc=rtvtoto8k-kQ7kNvwHEWlKp&_nc_oc=AdmKWCRx7lrQaP2vMLoV8fCiiW_KYtxXenE7aENvZa3N0k_amBEpvzORZgz-VwzWTy8&_nc_zt=23&_nc_ht=z-p3-scontent.fcmb7-1.fna&_nc_gid=cGxZd4NymKN1oGqgheh4QA&oh=00_AfJifvZ-5EHPYUvBtF9020P6xYnpNqCDLZc8pZCLIWCjaA&oe=683FBA30",
-      alt: "Mobile Banking App",
+      src: "/work/project-2.png",
+      alt: "Mobile App Interface",
       category: "Mobile Apps"
     },
     {
       id: 3,
-      src: "https://i.ytimg.com/vi/3WOXrhCzzr4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDsEmTM1_FDe-Cfmwe1OJthohe1Iw",
-      alt: "RESTful API Service",
+      src: "/work/project-3.png",
+      alt: "Backend Dashboard",
       category: "Backend Systems"
     },
     {
       id: 4,
-      src: "https://cms-assets.tutsplus.com/cdn-cgi/image/width=630/uploads/users/2056/posts/33235/image/19-07-05-ART-Tips-Print-Design-ID-1-2.jpg",
-      alt: "Dashboard Analytics",
+      src: "/work/project-4.png",
+      alt: "Web Platform",
       category: "Web Applications"
     },
     {
       id: 5,
-      src: "https://www.blendb2b.com/hs-fs/hubfs/blog-images/Modern%20Website%20Designs/Screenshot%202025-01-23%20at%2015.07.56-min.png?width=3544&height=1750&name=Screenshot%202025-01-23%20at%2015.07.56-min.png",
-      alt: "SaaS Platform",
-      category: "Web Applications"
+      src: "/work/project-5.jpg",
+      alt: "Mobile Application",
+      category: "Mobile Apps"
     },
     {
       id: 6,
-      src: "https://z-p3-scontent.fcmb7-1.fna.fbcdn.net/v/t39.30808-6/472312177_469534729534476_1106804398961209649_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeH6lO-Ao6YKuEQzXPOcoOD8l9f_iL-LLM2X1_-Iv4sszTGh7TDte_ttb9oGanasAebR5aUiXrjD6Lm5zvAb9iZd&_nc_ohc=lBiluh0-mGQQ7kNvwEVeZIf&_nc_oc=AdkRCJZYf16BtWRinwsrWgRt1BCeZ7KVy5NiL738ldE1f1eF6W7v54KIVJiQPe3tiR0&_nc_zt=23&_nc_ht=z-p3-scontent.fcmb7-1.fna&_nc_gid=0fE_cfHlG7xA-hulx_0zSg&oh=00_AfLG3uwaCIS1ui6oKT5CfQHlY7vHgDcZYvWqwsTcG4mTnw&oe=683FA2F8",
-      alt: "Fitness Tracker App",
+      src: "/work/project-6.jpg",
+      alt: "EZ Cart Login",
       category: "Mobile Apps"
     },
     {
       id: 7,
-      src: "https://www.clickdo.co.uk/wp-content/uploads/2020/04/Bespoke-Web-Design.jpg",
-      alt: "Microservices Architecture",
-      category: "Backend Systems"
-    },
-    {
-      id: 8,
-      src: "https://betterize.pl/strapi/uploads/172382_526a6ac995.jpg",
-      alt: "Real-time Chat Application",
+      src: "/work/project-7.png",
+      alt: "Elysian Travels",
       category: "Web Applications"
     },
   ];
