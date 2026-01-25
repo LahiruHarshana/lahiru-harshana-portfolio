@@ -272,7 +272,7 @@ const Home: FC<{}> = () => {
           </div>
 
           <div
-            className="hidden lg:block relative z-10 mt-8 lg:mt-0 w-60 h-60 sm:w-72 sm:h-72 md:w-72 md:h-96 lg:w-72 lg:h-[500px] xl:w-[450px] xl:h-[700px] bg-cover bg-no-repeat bg-center rounded-lg order-first lg:order-last" // MODIFIED HERE
+            className="hidden lg:block relative z-10 mt-8 lg:mt-0 w-60 h-60 sm:w-72 sm:h-72 md:w-72 md:h-96 lg:w-[450px] lg:h-[500px] xl:w-[650px] xl:h-[700px] bg-cover bg-no-repeat bg-center rounded-lg order-first lg:order-last" // MODIFIED HERE
             style={{ backgroundImage: "url('/dp.png')" }}
           ></div>
         </div>
