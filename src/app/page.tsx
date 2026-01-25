@@ -41,6 +41,7 @@ interface BlogPost {
   authorAvatarSrc: string;
   authorName: string;
   date: string;
+  category: string;
 }
 
 // 3D Parallax Image Container Component
@@ -141,6 +142,7 @@ const ParallaxImageContainer: FC = () => {
 const Home: FC<{}> = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("All");
+  const [activeBlogFilter, setActiveBlogFilter] = useState("All");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideStyle, setSlideStyle] = useState({
     opacity: 1,
@@ -155,9 +157,10 @@ const Home: FC<{}> = () => {
       imageAlt: "Code on screen",
       title: "Building Scalable APIs with Node.js and TypeScript",
       excerpt: "Learn the best practices for designing and implementing RESTful APIs that can handle millions of requests with proper error handling and authentication.",
-      authorAvatarSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjqdS3zgcdhRvPqumSKevrqUnSWdqxz8B8j3b70ZZitgIXZm0MTo5_y0rca_vcLvUMJ0VffrcPoJVucRYwANd_1bB0GTFIcKdJz76hc2LsvUMbWT2Ca8gOR4EGYHpCpuvetAlHX-yh0KpxZfvp82o-Ozm-HJbePPEJg6F0TRcZLdUxaTRXAKan7Ol2J/s800/Lily%20Anne%20Harrison.jpg",
+      authorAvatarSrc: "/me/blog-avatar.jpg",
       authorName: "Lahiru H.",
-      date: "January 20, 2026"
+      date: "January 20, 2026",
+      category: "Backend Development"
     },
     {
       id: 2,
@@ -165,9 +168,10 @@ const Home: FC<{}> = () => {
       imageAlt: "Developer workspace",
       title: "React Performance Optimization Techniques",
       excerpt: "Discover advanced techniques for optimizing React applications including memo, useMemo, useCallback, and code splitting strategies.",
-      authorAvatarSrc: "https://media.licdn.com/dms/image/v2/D4E03AQE727a0W5abuQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1730041137046?e=2147483647&v=beta&t=LT7g55UyjlIcz7qq2aw807hIWoDpFY1_PiPJmhZr7dc",
+      authorAvatarSrc: "/me/blog-avatar.jpg",
       authorName: "Lahiru H.",
-      date: "January 15, 2026"
+      date: "January 15, 2026",
+      category: "Frontend Development"
     },
     {
       id: 3,
@@ -175,9 +179,10 @@ const Home: FC<{}> = () => {
       imageAlt: "Cloud computing",
       title: "Deploying Applications with Docker and AWS",
       excerpt: "A comprehensive guide to containerizing your applications with Docker and deploying them to AWS using ECS, ECR, and other cloud services.",
-      authorAvatarSrc: "https://m.media-amazon.com/images/M/MV5BMTk3MDY4MDM3Nl5BMl5BanBnXkFtZTYwNzUyMzAz._V1_FMjpg_UX1000_.jpg",
+      authorAvatarSrc: "/me/blog-avatar.jpg",
       authorName: "Lahiru H.",
-      date: "January 10, 2026"
+      date: "January 10, 2026",
+      category: "DevOps & Cloud"
     },
   ];
   const socialLinks: Social[] = [
@@ -258,6 +263,10 @@ const Home: FC<{}> = () => {
   ];
   const [filteredItems, setFilteredItems] = useState(allPortfolioItemsData);
   const filterCategoriesList = ["All", "Web Applications", "Mobile Apps", "Backend Systems"];
+
+  const [filteredBlogPosts, setFilteredBlogPosts] = useState(blogPostsData);
+  const blogFilterCategoriesList = ["All", "Frontend Development", "Backend Development", "DevOps & Cloud"];
+
   const TRANSITION_DURATION = 300;
   useEffect(() => {
     if (activeFilter === "All") {
@@ -270,8 +279,23 @@ const Home: FC<{}> = () => {
     }
   }, [activeFilter]);
 
+  useEffect(() => {
+    if (activeBlogFilter === "All") {
+      setFilteredBlogPosts(blogPostsData);
+    } else {
+      const newFilteredPosts = blogPostsData.filter(
+        (post) => post.category === activeBlogFilter
+      );
+      setFilteredBlogPosts(newFilteredPosts);
+    }
+  }, [activeBlogFilter]);
+
   const handleFilterClick = (category: string) => {
     setActiveFilter(category);
+  };
+
+  const handleBlogFilterClick = (category: string) => {
+    setActiveBlogFilter(category);
   };
 
   const goToSlide = (newIndex: number) => {
@@ -793,56 +817,70 @@ const Home: FC<{}> = () => {
             <p style={{ fontFamily: 'Heebo, sans-serif' }} className="text-lg md:text-xl text-white tracking-wider font-medium">
               From Our Blog
             </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-2">
-              LATEST NEWS
-            </h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-2">LATEST NEWS</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {/* Assuming blogPostsData is an array of post objects */}
-            {blogPostsData.map((post) => (
-              <div
-                key={post.id}
-                className="bg-[#222222] rounded-lg overflow-hidden flex flex-col shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out group" // Darker background for cards, added group
-              >
-                <div className="relative w-full aspect-video overflow-hidden"> {/* Ensure image doesn't break rounded corners if any scale effect */}
-                  <Image
+          <nav className="flex justify-center mb-12 md:mb-16">
+            <ul className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 sm:gap-x-6 text-sm sm:text-base">
+              {blogFilterCategoriesList.map((category) => (
+                <li key={category}>
+                  <button
+                    onClick={() => handleBlogFilterClick(category)}
+                    className={`hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-white py-1 px-2 rounded
+                                ${activeBlogFilter === category
+                        ? 'text-white font-semibold border-b-2 border-white'
+                        : 'text-gray-400 hover:text-gray-200 hover:border-b-2 hover:border-gray-500'
+                      }`}
+                  >
+                    {category}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredBlogPosts.map((post) => (
+              <article key={post.id} className="bg-[#222] group cursor-pointer hover:-translate-y-2 transition-transform duration-300 rounded-lg overflow-hidden">
+                <div className="relative h-48 overflow-hidden">
+                  <span className="absolute top-4 left-4 z-10 bg-white text-black text-xs font-bold px-3 py-1 rounded">
+                    {post.date}
+                  </span>
+                  <img
                     src={post.imageSrc}
                     alt={post.imageAlt}
-                    layout="fill"
-                    objectFit="cover"
-                    className="transform transition-transform duration-300 ease-in-out group-hover:scale-105" // Added hover effect to image
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
-                <div className="p-6 md:p-8 flex flex-col flex-grow"> {/* Standardized padding */}
-                  <h3 className="text-xl lg:text-2xl font-semibold text-white mb-3 transition-colors duration-200">
-                    {/* Removed <a> tag if the whole card is clickable or if title is the only link */}
-                    {post.title}
-                  </h3>
-                  <p className="text-sm text-gray-300 leading-relaxed mb-4 line-clamp-3"> {/* Ensure @tailwindcss/line-clamp is installed */}
-                    {post.excerpt}
-                  </p>
-                  <div className="mt-auto pt-4 border-t border-gray-700"> {/* Adjusted border color */}
-                    <div className="flex items-center">
-                      <div className="relative w-10 h-10 mr-3 shrink-0">
-                        <Image
-                          src={post.authorAvatarSrc}
-                          alt={post.authorName}
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded-full"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-200">{post.authorName}</p>
-                        <p className="text-xs text-gray-400">{post.date}</p>
-                      </div>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-4">
+                    <img
+                      src={post.authorAvatarSrc}
+                      alt={post.authorName}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium text-gray-300">By {post.authorName}</span>
+                      <span className="text-xs text-gray-400">{post.category}</span>
                     </div>
                   </div>
+                  <h3 className="text-xl font-bold mb-3 hover:text-white transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  <Link href="#" className="inline-flex items-center text-sm font-semibold hover:text-white transition-colors">
+                    READ MORE &rarr;
+                  </Link>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
+
+          {filteredBlogPosts.length === 0 && (
+            <p className="text-center text-gray-400 mt-8 text-lg">No posts found for this category.</p>
+          )}
         </div>
       </section>
 
@@ -968,7 +1006,7 @@ const Home: FC<{}> = () => {
         </div>
       </section>
 
-    </div>
+    </div >
   );
 };
 
