@@ -27,12 +27,12 @@ body {
 
 
 :before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.hero-m{
+.hero-m {
   margin-top: 20px;
   margin-bottom: 30px;
 }
@@ -44,18 +44,18 @@ body {
   top: 0;
   bottom: 0;
   left: 8%;
-    z-index: 1;
+  z-index: 1;
 }
 
-.line-2{
+.line-2 {
   background-color: rgba(102, 102, 102, 0.3);
   z-index: 100;
   top: 90px;
 }
 
 
-.line-3{
-    z-index: 100;
+.line-3 {
+  z-index: 100;
   width: 1px;
   background-color: rgba(102, 102, 102, 0.3);
   position: absolute;
@@ -64,71 +64,75 @@ body {
   right: 8%;
 }
 
-.line-4{
-    background-color: rgba(102, 102, 102, 0.3);
-
-}
-.tsx{
-      color: #999;
-      font-size: 16px;
+.line-4 {
+  background-color: rgba(102, 102, 102, 0.3);
 
 }
 
-.line-5{
+.tsx {
+  color: #999;
+  font-size: 16px;
+
+}
+
+.line-5 {
   background-color: rgba(102, 102, 102, 0.3);
   z-index: 100;
   top: 946px;
 }
 
 .img-container {
-      display: inline-block;
-    }
-    .img-about {
-      --c: white;
-      --b: 5px;
-      --o: 40px;
-      --_p: calc(2*var(--o) + var(--b));
-      
-      width: 400px;
-      outline: var(--b) solid var(--c);
-      outline-offset: calc(var(--o) - var(--_p));
-      transition: .4s;
-      cursor: pointer;
-      padding: var(--_p) var(--_p) 0 0;
-    }
-    .img-about:hover {
-      padding: calc(var(--_p)/2) !important;
-    }
-    .img-container:hover .img-about.alt-padding {
-      padding: var(--_p) 0 0 var(--_p) !important;
-    }
+  display: inline-block;
+}
 
-    .line-6{
-        width: 1px;
+.img-about {
+  --c: white;
+  --b: 5px;
+  --o: 40px;
+  --_p: calc(2*var(--o) + var(--b));
+
+  width: 400px;
+  outline: var(--b) solid var(--c);
+  outline-offset: calc(var(--o) - var(--_p));
+  transition: .4s;
+  cursor: pointer;
+  padding: var(--_p) var(--_p) 0 0;
+}
+
+.img-about:hover {
+  padding: calc(var(--_p)/2) !important;
+}
+
+.img-container:hover .img-about.alt-padding {
+  padding: var(--_p) 0 0 var(--_p) !important;
+}
+
+.line-6 {
+  width: 1px;
   background-color: rgba(102, 102, 102, 0.3);
   position: absolute;
   top: 0;
   bottom: 0;
   left: 50%;
-    z-index: 100;
-    }
-
-    .tsxt{
-      font-weight: 100 !important;
-    }
-
-    .line-7{
-        background-color: rgba(102, 102, 102, 0.3);
   z-index: 100;
-    }
+}
 
-        .line-8{
-        background-color: rgba(102, 102, 102, 0.3);
+.tsxt {
+  font-weight: 100 !important;
+}
+
+.line-7 {
+  background-color: rgba(102, 102, 102, 0.3);
+  z-index: 100;
+}
+
+.line-8 {
+  background-color: rgba(102, 102, 102, 0.3);
   z-index: 100;
   top: 375px;
-    }
+}
 
-    .service-text {
+.service-text {
   font-family: 'Heebo', sans-serif;
   font-size: 15px;
   font-weight: 400;
@@ -136,63 +140,170 @@ body {
   color: rgb(153, 153, 153);
 }
 
-.line-9{
+.line-9 {
   background-color: rgba(102, 102, 102, 0.3);
   z-index: 100;
   top: 20px;
 }
 
-.line-10{
+.line-10 {
   width: 1px;
   background-color: rgba(102, 102, 102, 0.3);
   position: absolute;
   top: 20px;
   bottom: 0;
   left: 50%;
-    z-index: 1;
-    height: 99%;
+  z-index: 1;
+  height: 99%;
 }
 
-.line-11{
+.line-11 {
   background-color: rgba(102, 102, 102, 0.3);
   z-index: 100;
   top: 5px;
 }
 
-.line-12{
+.line-12 {
   width: 1px;
   background-color: rgba(102, 102, 102, 0.3);
   position: absolute;
   top: 0px;
   bottom: 0;
   left: 50%;
-    z-index: 1;
-    height: 99%;
+  z-index: 1;
+  height: 99%;
 }
 
-.line-13{
+.line-13 {
   background-color: rgba(102, 102, 102, 0.3);
   z-index: 100;
   bottom: 5px;
 }
 
-.line-14{
+.line-14 {
   width: 1px;
   background-color: rgba(102, 102, 102, 0.3);
   position: absolute;
   top: 0px;
   bottom: 0;
   left: 50%;
-    z-index: 1;
-    height: 100%;
+  z-index: 1;
+  height: 100%;
 }
 
-.field{
+.field {
   border: 1px solid #666;
 }
 
 @media (max-width: 639px) {
-  .link{
+  .link {
     font-size: 10px;
+  }
+}
+
+/* 3D Parallax About Me Section */
+.parallax-container {
+  position: relative;
+  width: 450px;
+  height: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+/* White Diamond Frame - rotated 45 degrees - Background Layer */
+.parallax-diamond-frame {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  pointer-events: none;
+  z-index: 1;
+  /* Behind everything */
+}
+
+/* Grey Square Frame - Middle Layer */
+.parallax-square-frame {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border: 3px solid rgba(100, 100, 100, 0.6);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 5;
+  /* Above diamond, below portrait */
+}
+
+/* Portrait Wrapper - Top Layer */
+.parallax-portrait {
+  position: relative;
+  z-index: 10;
+  /* In front of frames */
+  overflow: hidden;
+  width: 280px;
+  height: 360px;
+  background-color: #0f0f0f;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.portrait-image {
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.4s ease;
+  width: 100%;
+  height: 100%;
+  object-position: center top;
+}
+
+.parallax-container:hover .portrait-image {
+  filter: grayscale(70%);
+}
+
+/* About Me Heading Styles */
+.about-heading {
+  font-family: 'Oswald', sans-serif;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 33px;
+  color: rgb(255, 255, 255);
+  position: relative;
+}
+
+.about-heading-line {
+  width: 220px;
+  height: 6px;
+  background-color: white;
+  margin-top: 12px;
+}
+
+/* Responsive adjustments for 3D Parallax section */
+@media (max-width: 768px) {
+  .parallax-container {
+    width: 320px;
+    height: 420px;
+  }
+
+  .parallax-diamond-frame {
+    width: 280px;
+    height: 280px;
+  }
+
+  .parallax-square-frame {
+    width: 220px;
+    height: 220px;
+  }
+
+  .parallax-portrait {
+    width: 200px;
+    height: 260px;
   }
 }

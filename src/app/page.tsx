@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Oswald } from 'next/font/google';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -8,7 +8,8 @@ import "./flaticon.css";
 import Image from 'next/image';
 import { FaFacebook, FaLinkedin, FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-import { FiMonitor, FiCode, FiPenTool, FiSmartphone, FiSettings, FiHelpCircle } from 'react-icons/fi';
+import { FiLayers, FiServer, FiLayout, FiSmartphone, FiShield, FiCloud } from 'react-icons/fi';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 const oswald = Oswald({
   weight: ['400', '700'],
   subsets: ['latin'],
@@ -42,6 +43,100 @@ interface BlogPost {
   date: string;
 }
 
+// 3D Parallax Image Container Component
+const ParallaxImageContainer: FC = () => {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  // Motion values for mouse position
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Spring config for smooth animation
+  const springConfig = { damping: 25, stiffness: 150 };
+
+  // Transform mouse position to rotation/translation values for each layer
+  // Layer 1: Portrait Image - moves slightly in opposite direction
+  const imageX = useSpring(useTransform(mouseX, [-0.5, 0.5], [15, -15]), springConfig);
+  const imageY = useSpring(useTransform(mouseY, [-0.5, 0.5], [15, -15]), springConfig);
+
+  // Layer 2: White Diamond Frame - moves more in the same direction as mouse
+  const diamondX = useSpring(useTransform(mouseX, [5, 15], [-180, 20]), springConfig);
+  const diamondY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-420, 20]), springConfig);
+  const diamondRotate = useSpring(useTransform(mouseX, [-0.5, 0.5], [42, 48]), springConfig);
+
+  // Layer 3: Grey Square Frame - moves slower, opposite direction
+  const squareX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-350, -10]), springConfig);
+  const squareY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-380, -10]), springConfig);
+  const squareRotate = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current) return;
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Normalize mouse position to -0.5 to 0.5 range
+    const normalizedX = (e.clientX - centerX) / rect.width;
+    const normalizedY = (e.clientY - centerY) / rect.height;
+
+    mouseX.set(normalizedX);
+    mouseY.set(normalizedY);
+  };
+
+  const handleMouseLeave = () => {
+    // Reset to center position
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="parallax-container"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* White Diamond Frame - Background layer */}
+      <motion.div
+        className="parallax-diamond-frame"
+        style={{
+          x: diamondX,
+          y: diamondY,
+          rotate: diamondRotate
+        }}
+      />
+
+      {/* Grey Square Frame - Middle layer */}
+      <motion.div
+        className="parallax-square-frame"
+        style={{
+          x: squareX,
+          y: squareY,
+          rotate: squareRotate
+        }}
+      />
+
+      {/* Portrait Image - Foreground layer */}
+      <motion.div
+        className="parallax-portrait"
+        style={{
+          x: imageX,
+          y: imageY
+        }}
+      >
+        <Image
+          src="/dp.png"
+          alt="Lahiru Harshana - Software Engineer"
+          width={280}
+          height={360}
+          className="portrait-image"
+          style={{ objectFit: 'cover', objectPosition: 'center top' }}
+        />
+      </motion.div>
+    </div>
+  );
+};
 
 const Home: FC<{}> = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -57,32 +152,32 @@ const Home: FC<{}> = () => {
     {
       id: 1,
       imageSrc: "https://t4.ftcdn.net/jpg/01/79/13/19/360_F_179131907_dEbrIVvpqUkenNvGHUm4ZpChboGCeFl7.jpg",
-      imageAlt: "Various tech devices",
-      title: "Everything is easy when you think it easy",
-      excerpt: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.",
+      imageAlt: "Code on screen",
+      title: "Building Scalable APIs with Node.js and TypeScript",
+      excerpt: "Learn the best practices for designing and implementing RESTful APIs that can handle millions of requests with proper error handling and authentication.",
       authorAvatarSrc: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjqdS3zgcdhRvPqumSKevrqUnSWdqxz8B8j3b70ZZitgIXZm0MTo5_y0rca_vcLvUMJ0VffrcPoJVucRYwANd_1bB0GTFIcKdJz76hc2LsvUMbWT2Ca8gOR4EGYHpCpuvetAlHX-yh0KpxZfvp82o-Ozm-HJbePPEJg6F0TRcZLdUxaTRXAKan7Ol2J/s800/Lily%20Anne%20Harrison.jpg",
-      authorName: "Lily Anne",
-      date: "October 12,2019"
+      authorName: "Lahiru H.",
+      date: "January 20, 2026"
     },
     {
       id: 2,
       imageSrc: "https://res.cloudinary.com/kineticlabs/image/upload/q_auto/c_fit,w_1000/f_auto/v1/api-images/blog/9-21-23-ideas-for-a-monochrome-desk-setup/DSC07611_foajcm_sjx02o",
-      imageAlt: "Laptop on a desk",
-      title: "New design trends shaping the industry",
-      excerpt: "Discover the latest design trends that are making waves and how you can incorporate them into your next project for stunning results.",
+      imageAlt: "Developer workspace",
+      title: "React Performance Optimization Techniques",
+      excerpt: "Discover advanced techniques for optimizing React applications including memo, useMemo, useCallback, and code splitting strategies.",
       authorAvatarSrc: "https://media.licdn.com/dms/image/v2/D4E03AQE727a0W5abuQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1730041137046?e=2147483647&v=beta&t=LT7g55UyjlIcz7qq2aw807hIWoDpFY1_PiPJmhZr7dc",
-      authorName: "James Arch",
-      date: "October 14,2019"
+      authorName: "Lahiru H.",
+      date: "January 15, 2026"
     },
     {
       id: 3,
       imageSrc: "https://img.freepik.com/premium-photo/beautiful-open-book-pages-color-neon-light-table-night-background_181667-25485.jpg",
-      imageAlt: "Open book with fanned pages",
-      title: "The future of remote collaboration tools",
-      excerpt: "Remote work is here to stay. We explore the upcoming collaboration tools that promise to make teamwork more seamless and efficient.",
+      imageAlt: "Cloud computing",
+      title: "Deploying Applications with Docker and AWS",
+      excerpt: "A comprehensive guide to containerizing your applications with Docker and deploying them to AWS using ECS, ECR, and other cloud services.",
       authorAvatarSrc: "https://m.media-amazon.com/images/M/MV5BMTk3MDY4MDM3Nl5BMl5BanBnXkFtZTYwNzUyMzAz._V1_FMjpg_UX1000_.jpg",
-      authorName: "Eliza Monet",
-      date: "October 16,2019"
+      authorName: "Lahiru H.",
+      date: "January 10, 2026"
     },
   ];
   const socialLinks: Social[] = [
@@ -95,24 +190,24 @@ const Home: FC<{}> = () => {
   const testimonialsData: Testimonial[] = [
     {
       id: 1,
-      text: "If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks.",
+      text: "Lahiru delivered an exceptional e-commerce platform for our business. His technical expertise in React and Node.js, combined with his attention to detail, resulted in a highly scalable solution that exceeded our expectations.",
       avatarSrc: "/dp5.jpg",
-      name: "Jimmy Alex",
-      title: "SEO of Northy"
+      name: "David Kumar",
+      title: "CEO, TechRetail Solutions"
     },
     {
       id: 2,
-      text: "Working with them has been an absolute pleasure. Their dedication and insights are unparalleled. We've seen remarkable growth since partnering up. Highly recommended for any business looking to scale effectively.",
+      text: "Working with Lahiru on our mobile app was a fantastic experience. He understood our requirements perfectly and delivered a robust React Native application ahead of schedule. His problem-solving skills are remarkable.",
       avatarSrc: "/dp2.jpg",
       name: "Sarah Chen",
-      title: "Founder, Creative Solutions"
+      title: "Product Manager, FinTech Startup"
     },
     {
       id: 3,
-      text: "The level of professionalism and the quality of work delivered exceeded all my expectations. The team is responsive, innovative, and truly understands customer needs. A five-star experience!",
+      text: "Lahiru's backend engineering skills transformed our legacy system into a modern microservices architecture. His expertise in API design and database optimization significantly improved our application performance.",
       avatarSrc: "/dp3.avif",
       name: "Michael B.",
-      title: "Product Manager, Tech Innovators"
+      title: "CTO, Cloud Innovations"
     },
   ];
   const currentTestimonial = testimonialsData[currentIndex];
@@ -121,54 +216,54 @@ const Home: FC<{}> = () => {
     {
       id: 1,
       src: "https://htmlburger.com/blog/wp-content/uploads/2023/04/modern-website-design-examples.jpg",
-      alt: "Web Design Project Alpha",
-      category: "Web Design"
+      alt: "E-Commerce Platform",
+      category: "Web Applications"
     },
     {
       id: 2,
       src: "https://z-p3-scontent.fcmb7-1.fna.fbcdn.net/v/t39.30808-6/495304246_559930727161542_1826639213272179947_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEAw0cOlxMlnQ4tHcvwQ0iGDyv17BFII_kPK_XsEUgj-dMalUQHzEwe1J0zlmskRkAfR6RqXF_7oiB17flDRcNT&_nc_ohc=rtvtoto8k-kQ7kNvwHEWlKp&_nc_oc=AdmKWCRx7lrQaP2vMLoV8fCiiW_KYtxXenE7aENvZa3N0k_amBEpvzORZgz-VwzWTy8&_nc_zt=23&_nc_ht=z-p3-scontent.fcmb7-1.fna&_nc_gid=cGxZd4NymKN1oGqgheh4QA&oh=00_AfJifvZ-5EHPYUvBtF9020P6xYnpNqCDLZc8pZCLIWCjaA&oe=683FBA30",
-      alt: "Photography Session Alpha",
-      category: "Photography"
+      alt: "Mobile Banking App",
+      category: "Mobile Apps"
     },
     {
       id: 3,
       src: "https://i.ytimg.com/vi/3WOXrhCzzr4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDsEmTM1_FDe-Cfmwe1OJthohe1Iw",
-      alt: "Web Application Project X",
-      category: "Web Application"
+      alt: "RESTful API Service",
+      category: "Backend Systems"
     },
     {
       id: 4,
       src: "https://cms-assets.tutsplus.com/cdn-cgi/image/width=630/uploads/users/2056/posts/33235/image/19-07-05-ART-Tips-Print-Design-ID-1-2.jpg",
-      alt: "Print Design Sample I",
-      category: "Print Design"
+      alt: "Dashboard Analytics",
+      category: "Web Applications"
     },
     {
       id: 5,
       src: "https://www.blendb2b.com/hs-fs/hubfs/blog-images/Modern%20Website%20Designs/Screenshot%202025-01-23%20at%2015.07.56-min.png?width=3544&height=1750&name=Screenshot%202025-01-23%20at%2015.07.56-min.png",
-      alt: "Web Design Project Beta",
-      category: "Web Design"
+      alt: "SaaS Platform",
+      category: "Web Applications"
     },
     {
       id: 6,
       src: "https://z-p3-scontent.fcmb7-1.fna.fbcdn.net/v/t39.30808-6/472312177_469534729534476_1106804398961209649_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeH6lO-Ao6YKuEQzXPOcoOD8l9f_iL-LLM2X1_-Iv4sszTGh7TDte_ttb9oGanasAebR5aUiXrjD6Lm5zvAb9iZd&_nc_ohc=lBiluh0-mGQQ7kNvwEVeZIf&_nc_oc=AdkRCJZYf16BtWRinwsrWgRt1BCeZ7KVy5NiL738ldE1f1eF6W7v54KIVJiQPe3tiR0&_nc_zt=23&_nc_ht=z-p3-scontent.fcmb7-1.fna&_nc_gid=0fE_cfHlG7xA-hulx_0zSg&oh=00_AfLG3uwaCIS1ui6oKT5CfQHlY7vHgDcZYvWqwsTcG4mTnw&oe=683FA2F8",
-      alt: "Photography Session Beta",
-      category: "Photography"
+      alt: "Fitness Tracker App",
+      category: "Mobile Apps"
     },
     {
       id: 7,
       src: "https://www.clickdo.co.uk/wp-content/uploads/2020/04/Bespoke-Web-Design.jpg",
-      alt: "Web Design Project Gamma",
-      category: "Web Design"
+      alt: "Microservices Architecture",
+      category: "Backend Systems"
     },
     {
       id: 8,
       src: "https://betterize.pl/strapi/uploads/172382_526a6ac995.jpg",
-      alt: "Web Application Project Y",
-      category: "Web Application"
+      alt: "Real-time Chat Application",
+      category: "Web Applications"
     },
   ];
   const [filteredItems, setFilteredItems] = useState(allPortfolioItemsData);
-  const filterCategoriesList = ["All", "Web Design", "Print Design", "Web Application", "Photography"];
+  const filterCategoriesList = ["All", "Web Applications", "Mobile Apps", "Backend Systems"];
   const TRANSITION_DURATION = 300;
   useEffect(() => {
     if (activeFilter === "All") {
@@ -227,21 +322,21 @@ const Home: FC<{}> = () => {
         className="relative h-[950px] flex flex-col items-center justify-center py-10 md:py-0"
       >
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center lg:justify-around w-full">
-          <div className="relative z-10 text-center lg:text-left w-full lg:w-1/2 xl:w-2/5 order-last lg:order-first mb-10 lg:mb-0">
-            <div className="relative inline-block mb-4">
-              <div className="hidden sm:block absolute -left-4 md:left-96 top-1/2 transform -translate-y-1/2 -translate-x-full w-12 md:w-16 h-0.5 bg-white"></div>
-              <h4 className={`${oswald.className} text-base sm:text-lg font-normal uppercase tracking-[6px] sm:tracking-[8px] text-white relative`}>
+          <div className="relative z-10 text-center lg:text-left w-full lg:w-1/2 xl:w-1/2 order-last lg:order-first mb-10 lg:mb-0 lg:pl-24 xl:pl-32">
+            <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
+              <h4 className={`${oswald.className} text-base sm:text-lg font-normal uppercase tracking-[6px] sm:tracking-[8px] text-white whitespace-nowrap`}>
                 I Am Lahiru Harshana
               </h4>
+              <div className="hidden sm:block w-12 md:w-16 h-0.5 bg-white"></div>
             </div>
             <h2
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 break-words"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 whitespace-nowrap"
               style={{
                 fontFamily: 'Oswald, sans-serif',
                 lineHeight: '1.2',
               }}
             >
-              CREATIVE DESIGNER
+              SOFTWARE ENGINEER
             </h2>
             <Link
               href="#contact"
@@ -280,7 +375,7 @@ const Home: FC<{}> = () => {
         <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 text-center w-full px-4 
                       md:left-auto md:right-4 md:-translate-x-0 md:text-right md:w-auto md:px-0 z-20">
           <p className="text-xs sm:text-sm md:text-base font-normal text-gray-300">
-            Creative Designer And Developer
+            Software Engineer & Full-Stack Developer
           </p>
         </div>
 
@@ -343,57 +438,67 @@ const Home: FC<{}> = () => {
       <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-5"></div>
 
 
-      <section className="relative text-white py-16">
-        <div className="container mx-auto flex flex-col md:flex-row items-center">
-          <div className="relative w-full md:w-1/2 flex justify-center">
-            <div className="img-container">
-              <Image
-                className="img-about"
-                src="/dp.png"
-                alt="A random man"
-                width={300}
-                height={300}
-              />
-            </div>
+      {/* About Me Section with 3D Parallax */}
+      <section id="about" className="relative text-white py-16 md:py-24">
+        <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center">
+          {/* Left Side - Image with 3D Parallax Effect */}
+          <div className="relative w-full lg:w-1/2 flex justify-center mb-12 lg:mb-0">
+            <ParallaxImageContainer />
           </div>
 
           <div className="absolute top-0 bottom-0 bg-white z-10 line-6 h-full"></div>
 
-          <div className="md:ml-8 mt-8 md:mt-0 w-[40%]">
-            <h2 className="text-3xl font-bold mb-4">About Me</h2>
-            <p className="mb-6 tsxt">
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-              alteration in some form, by injected humour, or randomised words which don't look even slightly
-              believable.
+          {/* Right Side - Content */}
+          <div className="w-full lg:w-1/2 lg:pl-12 xl:pl-20">
+            {/* About Me Heading with underline */}
+            <div className="mb-8">
+              <h2 className="about-heading">
+                About Me
+              </h2>
+              <div className="about-heading-line"></div>
+            </div>
+
+            {/* First Paragraph */}
+            <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
+              I am a passionate Software Engineer with extensive experience in building
+              scalable web applications and robust backend systems. I specialize in full-stack
+              development using modern technologies, delivering high-quality solutions that
+              meet complex business requirements with precision and efficiency.
             </p>
-            <p className="mb-8">
-              If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything
-              embarrassing hidden in the middle of the text. All the Lorem Ipsum
+
+            {/* Second Paragraph */}
+            <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-8">
+              With a strong foundation in software architecture and design patterns, I bring
+              ideas to life through clean, maintainable code. From database design to user
+              interfaces, I handle the complete development lifecycle. My expertise spans
+              React, Node.js, TypeScript, and cloud services, enabling me to create seamless
+              digital experiences that are both functional and engaging for end users.
             </p>
+
+            {/* Download Resume Button */}
             <Link
-              href="#contact"
+              href="/resume.pdf"
               className={`
-              link
-              ${oswald.className}
-              inline-block
-              h-[50px]
-              leading-[47px]
-              text-[16px]
-              text-white
-              border
-              border-[rgba(102,102,102,0.8)]
-              px-[30px]
-              uppercase
-              tracking-[1px]
-              rounded-full
-              transition
-              transition-all
-              duration-300
-              ease-in-out
-              bg-transparent
-              hover:bg-gray-200
-              hover:text-black
-            `}
+                ${oswald.className}
+                inline-block
+                h-[50px]
+                leading-[48px]
+                text-[14px]
+                text-white
+                border
+                border-[rgba(102,102,102,0.8)]
+                px-[35px]
+                uppercase
+                tracking-[2px]
+                rounded-full
+                transition-all
+                duration-300
+                ease-in-out
+                bg-transparent
+                hover:bg-white
+                hover:text-black
+                hover:border-white
+              `}
             >
               Download Resume
             </Link>
@@ -401,8 +506,6 @@ const Home: FC<{}> = () => {
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white z-10 line-7"></div>
         <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-8"></div>
-
-
       </section>
 
       <section className="relative text-white py-16 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 2xl:px-60 service-section">
@@ -458,7 +561,7 @@ const Home: FC<{}> = () => {
         <div className="text-center mb-12">
           {/* Consider responsive text sizes for h2 as well if needed */}
           <h2 style={{ fontFamily: 'Heebo, sans-serif' }} className="text-xl md:text-2xl mb-4">
-            What I am Expert In
+            What I Specialize In
           </h2>
           <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold">MY SERVICE</h3>
         </div>
@@ -473,13 +576,13 @@ const Home: FC<{}> = () => {
                   </div>
                   {/* Assuming FiMonitor is an icon component. Ensure it scales or is sized appropriately. */}
                   {/* You might want to control icon size with Tailwind too e.g., <FiMonitor className="w-10 h-10 sm:w-12 sm:h-12" /> */}
-                  <FiMonitor size={50} />
+                  <FiLayers size={50} />
                 </div>
               </div>
-              <h4 className="text-xl font-semibold">Web Design</h4>
+              <h4 className="text-xl font-semibold">Full-Stack Development</h4>
             </div>
             <p className="service-text text-center text-gray-400">
-              I am an expert web designer and developer. Contrary to popular belief, Lorem Ipsum is not simply random text. It has meaning.
+              Building end-to-end web applications using React, Next.js, Node.js, and TypeScript. From database design to user interfaces, I deliver complete solutions.
             </p>
           </div>
 
@@ -491,13 +594,13 @@ const Home: FC<{}> = () => {
                   <div className="service-dot">
                     <div className="dots"></div>
                   </div>
-                  <FiCode size={50} />
+                  <FiServer size={50} />
                 </div>
               </div>
-              <h4 className="text-xl font-semibold">Web Development</h4>
+              <h4 className="text-xl font-semibold">Backend Engineering</h4>
             </div>
             <p className="service-text text-center text-gray-400">
-              I am an expert web designer and developer. Contrary to popular belief, Lorem Ipsum is not simply random text. It has meaning.
+              Designing robust server-side architectures, RESTful APIs, and microservices using Node.js, NestJS, PostgreSQL, and MongoDB for scalable performance.
             </p>
           </div>
 
@@ -509,13 +612,13 @@ const Home: FC<{}> = () => {
                   <div className="service-dot">
                     <div className="dots"></div>
                   </div>
-                  <FiPenTool size={50} />
+                  <FiLayout size={50} />
                 </div>
               </div>
-              <h4 className="text-xl font-semibold">Creative Design</h4>
+              <h4 className="text-xl font-semibold">Frontend Development</h4>
             </div>
             <p className="service-text text-center text-gray-400">
-              I am an expert web designer and developer. Contrary to popular belief, Lorem Ipsum is not simply random text. It has meaning.
+              Crafting responsive, accessible, and performant user interfaces using React, Next.js, Tailwind CSS, and modern JavaScript frameworks.
             </p>
           </div>
 
@@ -530,10 +633,10 @@ const Home: FC<{}> = () => {
                   <FiSmartphone size={50} />
                 </div>
               </div>
-              <h4 className="text-xl font-semibold">Responsive Design</h4>
+              <h4 className="text-xl font-semibold">Mobile Development</h4>
             </div>
             <p className="service-text text-center text-gray-400">
-              I am an expert web designer and developer. Contrary to popular belief, Lorem Ipsum is not simply random text. It has meaning.
+              Developing cross-platform mobile applications using React Native and Flutter, delivering native-like experiences on iOS and Android.
             </p>
           </div>
 
@@ -545,13 +648,13 @@ const Home: FC<{}> = () => {
                   <div className="service-dot">
                     <div className="dots"></div>
                   </div>
-                  <FiSettings size={50} />
+                  <FiShield size={50} />
                 </div>
               </div>
-              <h4 className="text-xl font-semibold">Branding Identity</h4>
+              <h4 className="text-xl font-semibold">API Development</h4>
             </div>
             <p className="service-text text-center text-gray-400">
-              I am an expert web designer and developer. Contrary to popular belief, Lorem Ipsum is not simply random text. It has meaning.
+              Building secure, well-documented APIs with authentication, rate limiting, and comprehensive error handling for seamless integrations.
             </p>
           </div>
 
@@ -563,13 +666,13 @@ const Home: FC<{}> = () => {
                   <div className="service-dot">
                     <div className="dots"></div>
                   </div>
-                  <FiHelpCircle size={50} />
+                  <FiCloud size={50} />
                 </div>
               </div>
-              <h4 className="text-xl font-semibold">24/7 Support</h4>
+              <h4 className="text-xl font-semibold">DevOps & Cloud</h4>
             </div>
             <p className="service-text text-center text-gray-400">
-              I am an expert web designer and developer. Contrary to popular belief, Lorem Ipsum is not simply random text. It has meaning.
+              Implementing CI/CD pipelines, containerization with Docker, and cloud deployments on AWS and Google Cloud for reliable infrastructure.
             </p>
           </div>
         </div>
@@ -764,12 +867,12 @@ const Home: FC<{}> = () => {
             {/* Left Column: Contact Information */}
             <div className="text-gray-300">
               <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
-                Our Contacts
+                Get In Touch
               </h3>
               <p className="leading-relaxed mb-8 text-gray-400 text-base sm:text-lg"> {/* Added responsive text size */}
-                Contrary to popular belief, Lorem Ipsum is not simply random text. It
-                has roots in a piece of classical Latin literature from 45 BC, making it
-                over 2000 years old.
+                Whether you need a full-stack web application, API development, or mobile app,
+                I'm here to help bring your ideas to life. Let's discuss how I can contribute
+                to your next project.
               </p>
 
               <div className="mb-6">
