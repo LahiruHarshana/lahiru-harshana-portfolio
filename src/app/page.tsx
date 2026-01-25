@@ -153,7 +153,7 @@ const Home: FC<{}> = () => {
   const blogPostsData: BlogPost[] = [
     {
       id: 1,
-      imageSrc: "https://t4.ftcdn.net/jpg/01/79/13/19/360_F_179131907_dEbrIVvpqUkenNvGHUm4ZpChboGCeFl7.jpg",
+      imageSrc: "/blog/nodejs-ts.png",
       imageAlt: "Code on screen",
       title: "Building Scalable APIs with Node.js and TypeScript",
       excerpt: "Learn the best practices for designing and implementing RESTful APIs that can handle millions of requests with proper error handling and authentication.",
@@ -164,7 +164,7 @@ const Home: FC<{}> = () => {
     },
     {
       id: 2,
-      imageSrc: "https://res.cloudinary.com/kineticlabs/image/upload/q_auto/c_fit,w_1000/f_auto/v1/api-images/blog/9-21-23-ideas-for-a-monochrome-desk-setup/DSC07611_foajcm_sjx02o",
+      imageSrc: "/blog/react-opt.png",
       imageAlt: "Developer workspace",
       title: "React Performance Optimization Techniques",
       excerpt: "Discover advanced techniques for optimizing React applications including memo, useMemo, useCallback, and code splitting strategies.",
@@ -175,7 +175,7 @@ const Home: FC<{}> = () => {
     },
     {
       id: 3,
-      imageSrc: "https://img.freepik.com/premium-photo/beautiful-open-book-pages-color-neon-light-table-night-background_181667-25485.jpg",
+      imageSrc: "/blog/docker-aws.png",
       imageAlt: "Cloud computing",
       title: "Deploying Applications with Docker and AWS",
       excerpt: "A comprehensive guide to containerizing your applications with Docker and deploying them to AWS using ECS, ECR, and other cloud services.",
