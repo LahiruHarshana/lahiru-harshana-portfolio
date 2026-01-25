@@ -16,7 +16,7 @@ This portfolio is designed to be a comprehensive showcase of my skills, projects
 ## ✨ Key Features & Sections
 
 ### 1. Hero Section
-![Hero Section](/assets/hero-section.png)
+![Hero Section](/public/assets/hero-section.png)
 The landing experience makes a bold statement with a minimalist dark aesthetic.
 - **Introduction**: Clearly presents "I AM LAHIRU HARSHANA" followed by a prominent "SOFTWARE ENGINEER" title.
 - **Visuals**: Features a high-quality professional portrait seamlessly blended into the dark background.
@@ -24,7 +24,7 @@ The landing experience makes a bold statement with a minimalist dark aesthetic.
 - **Connectivity**: Integrated social media sidebar for quick access to professional profiles.
 
 ### 2. About Me
-![About Me Section](/assets/about-section.png)
+![About Me Section](/public/assets/about-section.png)
 A dedicated section to introduce myself and my professional philosophy.
 - **Bio**: Highlights my passion for building scalable web applications and robust backend systems.
 - **Experience**: Emphasizes my expertise in full-stack development, software architecture, and design patterns.
@@ -32,7 +32,7 @@ A dedicated section to introduce myself and my professional philosophy.
 - **Resources**: Includes a "DOWNLOAD RESUME" button for recruiters and potential collaborators.
 
 ### 3. My Services
-![My Services Section](/assets/services-section.png)
+![My Services Section](/public/assets/services-section.png)
 A comprehensive grid overview of the technical solutions I offer.
 - **Full-Stack Development**: Building end-to-end web apps with React, Next.js, Node.js, and TypeScript.
 - **Backend Engineering**: Designing robust server architectures, RESTful APIs, and microservices (Node.js, NestJS, PostgreSQL).
