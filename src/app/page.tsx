@@ -10,6 +10,8 @@ import { FaFacebook, FaLinkedin, FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FiLayers, FiServer, FiLayout, FiSmartphone, FiShield, FiCloud } from 'react-icons/fi';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import SlideMenu from './components/SlideMenu';
+import HamburgerButton from './components/HamburgerButton';
 const oswald = Oswald({
   weight: ['400', '700'],
   subsets: ['latin'],
@@ -141,6 +143,7 @@ const ParallaxImageContainer: FC = () => {
 
 const Home: FC<{}> = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isSlideMenuOpen, setIsSlideMenuOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState("All");
   const [activeBlogFilter, setActiveBlogFilter] = useState("All");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -330,6 +333,17 @@ const Home: FC<{}> = () => {
   };
   return (
     <div className="relative bg-[#202020] text-white">
+      {/* Hamburger Menu Button */}
+      <HamburgerButton 
+        onClick={() => setIsSlideMenuOpen(true)} 
+        isOpen={isSlideMenuOpen} 
+      />
+
+      {/* Slide-in Navigation Menu */}
+      <SlideMenu 
+        isOpen={isSlideMenuOpen} 
+        onClose={() => setIsSlideMenuOpen(false)} 
+      />
 
       <div className="absolute top-0 bottom-0 bg-white z-10 line h-full"></div>
       <div className="absolute top-0 bottom-0 bg-white z-10 line-3 h-full"></div>
@@ -526,7 +540,7 @@ const Home: FC<{}> = () => {
         <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-8"></div>
       </section>
 
-      <section className="relative text-white py-16 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 2xl:px-60 service-section">
+      <section id="services" className="relative text-white py-16 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 2xl:px-60 service-section">
         <style jsx>{`
     .services-icon-wrapper {
       position: relative;
@@ -697,7 +711,7 @@ const Home: FC<{}> = () => {
       </section>
 
 
-      <section className="relative text-white py-12 sm:py-16 md:py-24 lg:py-32 xl:py-40 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60">
+      <section id="portfolio" className="relative text-white py-12 sm:py-16 md:py-24 lg:py-32 xl:py-40 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60">
         {/* Horizontal line at the top of the section */}
         <div className="absolute top-0 left-0 right-0 h-px bg-white opacity-50 z-10 line-9"></div>
         {/* Vertical line on the left of the section */}
@@ -750,7 +764,7 @@ const Home: FC<{}> = () => {
         </div>
       </section>
 
-      <section className="relative text-white min-h-[60vh] flex flex-col items-center justify-center py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section id="testimonials" className="relative text-white min-h-[60vh] flex flex-col items-center justify-center py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute top-0 bottom-0 bg-white z-10 line-12 h-full"></div>
         <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-11"></div>
         <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-13"></div>
@@ -804,7 +818,7 @@ const Home: FC<{}> = () => {
         </div>
       </section>
 
-      <section className="relative text-white py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-32 2xl:px-60">
+      <section id="blog" className="relative text-white py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-8 md:px-12 lg:px-20 xl:px-32 2xl:px-60">
         {/* Assumed vertical line on the left */}
         <div className="absolute top-0 bottom-0 left-0 w-px bg-white opacity-30 z-20 line-14"></div>
         {/* Assumed horizontal line at the top */}
@@ -884,7 +898,7 @@ const Home: FC<{}> = () => {
         </div>
       </section>
 
-      <section className=" text-white py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60"> {/* Added a dark section background, adjust as needed */}
+      <section id="contact" className=" text-white py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60"> {/* Added a dark section background, adjust as needed */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 md:mb-16">
             <p style={{ fontFamily: 'Heebo, sans-serif' }} className="text-lg md:text-xl text-white tracking-wider font-medium">
