@@ -126,27 +126,27 @@ const SlideMenu: FC<SlideMenuProps> = ({ isOpen, onClose }) => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + index * 0.05, duration: 0.3 }}
                     onClick={() => handleMenuClick(item.id)}
-                    className="group relative bg-[#252525] rounded-xl overflow-hidden aspect-[16/5] hover:ring-2 hover:ring-white/50 transition-all duration-300 w-full"
+                    className="group relative bg-[#252525] rounded-xl overflow-hidden aspect-[16/5] hover:ring-2 hover:ring-white/60 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 w-full"
                   >
                     {/* Thumbnail Image */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 z-10 transition-all duration-500 group-hover:from-black/60 group-hover:via-black/20 group-hover:to-transparent" />
                     <Image
                       src={item.thumbnail}
                       alt={item.label}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-125"
                       sizes="(max-width: 640px) 50vw, 200px"
                     />
 
                     {/* Label */}
                     <div className="absolute bottom-0 left-0 right-0 p-3 z-20">
-                      <h3 className="text-white text-sm font-medium tracking-wide uppercase">
+                      <h3 className="text-white text-sm font-medium tracking-wide uppercase transition-transform duration-300 group-hover:translate-x-1">
                         {item.label}
                       </h3>
                     </div>
 
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-5" />
+                    {/* Hover Overlay - subtle glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-5" />
                   </motion.button>
                 ))}
               </div>
