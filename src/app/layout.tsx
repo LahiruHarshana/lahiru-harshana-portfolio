@@ -1,170 +1,223 @@
-import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Oswald } from 'next/font/google';
-import { Heebo } from 'next/font/google';
-import "./flaticon.css";
-import Head from "next/head";
+import type { Metadata, Viewport } from 'next';
+import { Geist, Geist_Mono, Oswald, Heebo } from 'next/font/google';
+import './globals.css';
+import './flaticon.css';
+import {
+  siteConfig,
+  getPersonStructuredData,
+  getWebsiteStructuredData,
+  getProfessionalServiceStructuredData,
+} from '@/lib/seo-config';
+
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 const oswald = Oswald({
-  weight: ['400', '700'], // adjust weights as needed
+  weight: ['400', '700'],
   subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-oswald',
 });
+
 const heebo = Heebo({
   weight: ['400'],
   subsets: ['latin'],
+  display: 'swap',
 });
-
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
-const siteName = "Lahiru Harshan Portfolio";
-const description = "Explore the professional portfolio of Lahiru Harshan, a [Your Profession/Specialty, e.g., Full-Stack Developer, UI/UX Designer]. Discover innovative projects, technical skills, and experience in [mention key technologies/areas e.g., React, Next.js, Node.js].";
-const keywords = [
-  "Lahiru Harshan",
-  "portfolio",
-  "web developer", // Adjust to your profession
-  "software engineer", // Adjust to your profession
-  "Next.js developer", // Add specific skills
-  "React developer",
-  "Sri Lanka", // Add your location if relevant for local SEO
-  // Add more relevant keywords for your skills and services
-];
-const siteUrl = "https://yourdomain.com"; // **IMPORTANT: Replace with your actual domain**
-
+// Comprehensive Metadata for SEO
 export const metadata: Metadata = {
-  // Title: Can be customized per page, but this is a good default for the homepage
+  // Title configuration
   title: {
-    default: siteName,
-    template: `%s | ${siteName}`, // For other pages: "Page Title | Lahiru Harshan Portfolio"
+    default: siteConfig.siteName,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: description,
-  keywords: keywords,
-  authors: [{ name: "Lahiru Harshan", url: siteUrl }], // Link to your site or social profile
-  creator: "Lahiru Harshan",
-  publisher: "Lahiru Harshan",
+  
+  // Description
+  description: siteConfig.description,
+  
+  // Keywords
+  keywords: siteConfig.keywords,
+  
+  // Authors
+  authors: [{ name: siteConfig.name, url: siteConfig.siteUrl }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
 
-  // Favicon: Assumes favicon.ico, apple-touch-icon.png, etc., are in your /public directory
+  // Favicon and Icons
   icons: {
-    icon: "/favicon.ico", // Standard favicon
-    shortcut: "/favicon-16x16.png", // Or your preferred shortcut icon
-    apple: "/apple-touch-icon.png", // For Apple devices
-    // You can add more sizes or types if needed
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
   },
 
-  // Open Graph (for social media sharing - Facebook, LinkedIn, etc.)
+  // Open Graph (Facebook, LinkedIn, etc.)
   openGraph: {
-    title: siteName,
-    description: description,
-    url: siteUrl,
-    siteName: siteName,
+    type: 'website',
+    locale: siteConfig.locale,
+    url: siteConfig.siteUrl,
+    siteName: siteConfig.siteName,
+    title: siteConfig.siteName,
+    description: siteConfig.description,
     images: [
       {
-        url: `${siteUrl}/og-image.png`, // **IMPORTANT: Create an engaging OG image (1200x630px) and place it in /public**
+        url: `${siteConfig.siteUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: `Preview of ${siteName}`,
+        alt: `${siteConfig.name} - ${siteConfig.jobTitle}`,
+        type: 'image/png',
+      },
+      {
+        url: `${siteConfig.siteUrl}/dp.png`,
+        width: 400,
+        height: 400,
+        alt: siteConfig.name,
+        type: 'image/png',
       },
     ],
-    locale: "en_US", // Adjust if your primary audience has a different locale
-    type: "website", // Or "profile" if it's more of a personal profile page
   },
 
-  // Twitter Card (for sharing on Twitter)
+  // Twitter Card
   twitter: {
-    card: "summary_large_image", // Use "summary_large_image" for a more visual card
-    title: siteName,
-    description: description,
-    // siteId: "@yourTwitterHandle", // If you have a Twitter Site ID
-    creator: "@yourTwitterHandle", // **IMPORTANT: Replace with your Twitter handle**
-    images: [`${siteUrl}/twitter-image.png`], // **IMPORTANT: Create a Twitter-specific image (e.g., 1200x675px or use the OG image) and place it in /public**
-  },
-
-  // Robots: Controls search engine crawling behavior
-  robots: {
-    index: true, // Allow indexing of this page
-    follow: true, // Allow following links from this page
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+    card: 'summary_large_image',
+    title: siteConfig.siteName,
+    description: siteConfig.shortDescription,
+    creator: siteConfig.social.twitter,
+    site: siteConfig.social.twitter,
+    images: {
+      url: `${siteConfig.siteUrl}/og-image.png`,
+      alt: `${siteConfig.name} - ${siteConfig.jobTitle}`,
     },
   },
 
-  // Canonical URL: Helps prevent duplicate content issues
-  // Set this globally if your site is always served from one primary URL (e.g., https://yourdomain.com)
-  // For dynamic pages, you'd set this in the page's generateMetadata function
-  alternates: {
-    canonical: siteUrl,
+  // Robots
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 
-  // Manifest (for Progressive Web App features, optional but good for user experience)
-  // manifest: `${siteUrl}/manifest.json`, // Create a manifest.json file in /public
+  // Canonical URL
+  alternates: {
+    canonical: siteConfig.siteUrl,
+    languages: {
+      'en-US': siteConfig.siteUrl,
+    },
+  },
 
-  // Verification (if you need to verify ownership with search consoles)
-  // verification: {
-  //   google: "YOUR_GOOGLE_SITE_VERIFICATION_CODE",
-  //   yandex: "YOUR_YANDEX_VERIFICATION_CODE",
-  //   other: {
-  //     me: ["your-email@example.com", siteUrl],
-  //   },
-  // },
-
-  // Other useful metadata
-  applicationName: siteName,
+  // Application info
+  applicationName: siteConfig.name,
+  referrer: 'origin-when-cross-origin',
+  generator: 'Next.js',
+  
+  // Apple Web App
   appleWebApp: {
-    title: siteName,
-    statusBarStyle: "default",
+    title: siteConfig.name,
+    statusBarStyle: 'black-translucent',
     capable: true,
   },
+
+  // Format detection
   formatDetection: {
-    telephone: false, // Set to true if you have clickable phone numbers
+    telephone: true,
+    date: true,
+    email: true,
+    address: true,
   },
-  // assets: [`${siteUrl}/assets`], // If you have a dedicated assets folder you want to declare
-  // category: 'technology', // If your portfolio fits a specific category
+
+  // Manifest
+  manifest: '/manifest.json',
+
+  // Category
+  category: 'technology',
+
+  // Other metadata
+  other: {
+    'msapplication-TileColor': siteConfig.themeColor,
+  },
 };
 
-// --- VIEWPORT SETTINGS ---
+// Viewport settings
 export const viewport: Viewport = {
-  themeColor: "#ffffff", // **Change to your site's primary theme color**
-  colorScheme: "light", // Or "dark" or "light dark" if you support both
-  width: "device-width",
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: siteConfig.themeColor },
+    { media: '(prefers-color-scheme: dark)', color: siteConfig.themeColor },
+  ],
+  colorScheme: 'dark',
+  width: 'device-width',
   initialScale: 1,
-  // maximumScale: 1, // Optional: uncomment if you want to prevent zooming
+  maximumScale: 5,
+  userScalable: true,
 };
-
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Prepare JSON-LD structured data
+  const personStructuredData = getPersonStructuredData();
+  const websiteStructuredData = getWebsiteStructuredData();
+  const serviceStructuredData = getProfessionalServiceStructuredData();
+
   return (
-<html lang="en">
-
-      {/*
-        The <Head> component from `next/head` is not needed here for metadata
-        as we are using the `metadata` export.
-        The Google Font link for Heebo is also removed as `next/font/google` handles it.
-      */}
-<body className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}>
-
-
-
-
-
-{children}
-
-</body>
+    <html lang={siteConfig.language}>
+      <head>
+        {/* Preconnect to external domains for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* DNS prefetch for performance */}
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personStructuredData),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteStructuredData),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(serviceStructuredData),
+          }}
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

@@ -36,6 +36,7 @@ interface Social {
 
 interface BlogPost {
   id: number;
+  slug: string;
   imageSrc: string;
   imageAlt: string;
   title: string;
@@ -156,6 +157,7 @@ const Home: FC<{}> = () => {
   const blogPostsData: BlogPost[] = [
     {
       id: 1,
+      slug: "building-scalable-apis-nodejs-typescript",
       imageSrc: "/blog/nodejs-ts.png",
       imageAlt: "Code on screen",
       title: "Building Scalable APIs with Node.js and TypeScript",
@@ -167,6 +169,7 @@ const Home: FC<{}> = () => {
     },
     {
       id: 2,
+      slug: "react-performance-optimization-techniques",
       imageSrc: "/blog/react-opt.png",
       imageAlt: "Developer workspace",
       title: "React Performance Optimization Techniques",
@@ -178,6 +181,7 @@ const Home: FC<{}> = () => {
     },
     {
       id: 3,
+      slug: "deploying-applications-docker-aws",
       imageSrc: "/blog/docker-aws.png",
       imageAlt: "Cloud computing",
       title: "Deploying Applications with Docker and AWS",
@@ -405,7 +409,7 @@ const Home: FC<{}> = () => {
         </div>
 
         <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 text-center w-full px-4 
-                      md:left-auto md:right-4 md:-translate-x-0 md:text-right md:w-auto md:px-0 z-20">
+                      md:left-auto md:right-20 md:-translate-x-0 md:text-right md:w-auto md:px-0 z-20">
           <p className="text-xs sm:text-sm md:text-base font-normal text-gray-300">
             Software Engineer & Full-Stack Developer
           </p>
@@ -884,7 +888,7 @@ const Home: FC<{}> = () => {
                   <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
                     {post.excerpt}
                   </p>
-                  <Link href="#" className="inline-flex items-center text-sm font-semibold hover:text-white transition-colors">
+                  <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-sm font-semibold hover:text-white transition-colors">
                     READ MORE &rarr;
                   </Link>
                 </div>

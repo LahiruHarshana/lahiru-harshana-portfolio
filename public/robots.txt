@@ -1,0 +1,30 @@
+# Robots.txt for Lahiru Harshana Portfolio
+# https://lahiruharshana.com
+
+# Allow all web crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://lahiruharshana.com/sitemap.xml
+
+# Disallow admin or private areas (if any)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+
+# Allow Google to crawl images
+User-agent: Googlebot-Image
+Allow: /
+
+# Crawl delay for less aggressive bots
+User-agent: *
+Crawl-delay: 1
