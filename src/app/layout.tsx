@@ -161,6 +161,11 @@ export const metadata: Metadata = {
   other: {
     'msapplication-TileColor': siteConfig.themeColor,
   },
+
+  // Google Search Console Verification
+  verification: {
+    google: 'google38510a47657f038b',
+  },
 };
 
 // Viewport settings
