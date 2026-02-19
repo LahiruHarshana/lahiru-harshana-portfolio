@@ -4,18 +4,18 @@
 export const siteConfig = {
   name: 'Lahiru Harshana',
   siteName: 'Lahiru Harshana | Software Engineer Portfolio',
-  siteUrl: 'https://lahiruharshana.com',
+  siteUrl: 'https://www.lahiruharshana.dev',
   description:
     'Lahiru Harshana is a Full-Stack Software Engineer specializing in React, Next.js, Node.js, and cloud technologies. Explore innovative projects, technical expertise, and professional experience.',
   shortDescription:
     'Full-Stack Software Engineer specializing in React, Next.js, Node.js, and cloud technologies.',
   author: 'Lahiru Harshana',
-  email: 'contact@lahiruharshana.com', // Update with your email
+  email: 'lharshana2002@gmail.com',
   locale: 'en_US',
   language: 'en',
   themeColor: '#202020',
   backgroundColor: '#202020',
-  
+
   // Social links
   social: {
     twitter: '@LahiruHarsh',
@@ -45,11 +45,11 @@ export const siteConfig = {
     'Tailwind CSS',
     'Git',
   ],
-  
+
   // Location
   location: {
     country: 'Sri Lanka',
-    city: 'Colombo',
+    city: 'Weligama, Matara',
   },
 
   // Keywords for SEO

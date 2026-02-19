@@ -336,17 +336,17 @@ const Home: FC<{}> = () => {
     }, TRANSITION_DURATION);
   };
   return (
-    <div className="relative bg-[#202020] text-white">
+    <main className="relative bg-[#202020] text-white">
       {/* Hamburger Menu Button */}
-      <HamburgerButton 
-        onClick={() => setIsSlideMenuOpen(true)} 
-        isOpen={isSlideMenuOpen} 
+      <HamburgerButton
+        onClick={() => setIsSlideMenuOpen(true)}
+        isOpen={isSlideMenuOpen}
       />
 
       {/* Slide-in Navigation Menu */}
-      <SlideMenu 
-        isOpen={isSlideMenuOpen} 
-        onClose={() => setIsSlideMenuOpen(false)} 
+      <SlideMenu
+        isOpen={isSlideMenuOpen}
+        onClose={() => setIsSlideMenuOpen(false)}
       />
 
       <div className="absolute top-0 bottom-0 bg-white z-10 line h-full"></div>
@@ -360,12 +360,12 @@ const Home: FC<{}> = () => {
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center lg:justify-around w-full">
           <div className="relative z-10 text-center lg:text-left w-full lg:w-1/2 xl:w-1/2 order-last lg:order-first mb-10 lg:mb-0 lg:pl-24 xl:pl-32">
             <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
-              <h4 className={`${oswald.className} text-base sm:text-lg font-normal uppercase tracking-[6px] sm:tracking-[8px] text-white whitespace-nowrap`}>
+              <p className={`${oswald.className} text-base sm:text-lg font-normal uppercase tracking-[6px] sm:tracking-[8px] text-white whitespace-nowrap`}>
                 I Am Lahiru Harshana
-              </h4>
+              </p>
               <div className="hidden sm:block w-12 md:w-16 h-0.5 bg-white"></div>
             </div>
-            <h2
+            <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 whitespace-nowrap"
               style={{
                 fontFamily: 'Oswald, sans-serif',
@@ -373,7 +373,7 @@ const Home: FC<{}> = () => {
               }}
             >
               SOFTWARE ENGINEER
-            </h2>
+            </h1>
             <Link
               href="#contact"
               className={`
@@ -456,6 +456,10 @@ const Home: FC<{}> = () => {
                 key={social.id}
 
                 href={social.href}
+
+                target="_blank"
+
+                rel="noopener noreferrer"
 
                 className="text-white hover:text-gray-300 text-1xl mb-6"
 
@@ -1070,6 +1074,8 @@ const Home: FC<{}> = () => {
               <a
                 key={social.id}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-gray-400 hover:bg-white hover:text-black transition-all duration-300 border border-gray-800"
               >
                 {social.icon}
@@ -1084,7 +1090,7 @@ const Home: FC<{}> = () => {
         </div>
       </footer>
 
-    </div>
+    </main>
   );
 };
 

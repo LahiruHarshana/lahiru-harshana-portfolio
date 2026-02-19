@@ -36,18 +36,21 @@ const geistMono = Geist_Mono({
 
 // Comprehensive Metadata for SEO
 export const metadata: Metadata = {
+  // Base URL for resolving relative URLs in metadata
+  metadataBase: new URL(siteConfig.siteUrl),
+
   // Title configuration
   title: {
     default: siteConfig.siteName,
     template: `%s | ${siteConfig.name}`,
   },
-  
+
   // Description
   description: siteConfig.description,
-  
+
   // Keywords
   keywords: siteConfig.keywords,
-  
+
   // Authors
   authors: [{ name: siteConfig.name, url: siteConfig.siteUrl }],
   creator: siteConfig.name,
@@ -132,7 +135,7 @@ export const metadata: Metadata = {
   applicationName: siteConfig.name,
   referrer: 'origin-when-cross-origin',
   generator: 'Next.js',
-  
+
   // Apple Web App
   appleWebApp: {
     title: siteConfig.name,
@@ -189,10 +192,10 @@ export default function RootLayout({
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
+
         {/* DNS prefetch for performance */}
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        
+
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
