@@ -12,6 +12,13 @@ import { FiLayers, FiServer, FiLayout, FiSmartphone, FiShield, FiCloud } from 'r
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import SlideMenu from './components/SlideMenu';
 import HamburgerButton from './components/HamburgerButton';
+import {
+  ScrollReveal,
+  ParallaxLayer,
+  StaggerContainer,
+  StaggerItem,
+  FadeInOnLoad,
+} from './components/ScrollAnimations';
 const oswald = Oswald({
   weight: ['400', '700'],
   subsets: ['latin'],
@@ -305,6 +312,15 @@ const Home: FC<{}> = () => {
     setActiveBlogFilter(category);
   };
 
+  const handleContactScroll = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const contactSection = document.getElementById('contact');
+    if (!contactSection) return;
+
+    contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.history.replaceState(null, '', '#contact');
+  };
+
   const goToSlide = (newIndex: number) => {
     if (newIndex === currentIndex || isAnimating) return;
 
@@ -358,24 +374,62 @@ const Home: FC<{}> = () => {
         className="relative h-[950px] flex flex-col items-center justify-center py-10 md:py-0"
       >
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-center lg:justify-around w-full">
-          <div className="relative z-10 text-center lg:text-left w-full lg:w-1/2 xl:w-1/2 order-last lg:order-first mb-10 lg:mb-0 lg:pl-24 xl:pl-32">
-            <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
+          <FadeInOnLoad delay={0.2} className="relative z-10 text-center lg:text-left w-full lg:w-1/2 xl:w-1/2 order-last lg:order-first mb-10 lg:mb-0 lg:pl-24 xl:pl-32">
+            <motion.div
+              className="flex items-center justify-center lg:justify-start gap-4 mb-4"
+              initial={{ x: -100, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: false, amount: 0.5 }}
+              transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            >
               <p className={`${oswald.className} text-base sm:text-lg font-normal uppercase tracking-[6px] sm:tracking-[8px] text-white whitespace-nowrap`}>
                 I Am Lahiru Harshana
               </p>
               <div className="hidden sm:block w-12 md:w-16 h-0.5 bg-white"></div>
-            </div>
-            <h1
+            </motion.div>
+            <motion.h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 whitespace-nowrap"
               style={{
                 fontFamily: 'Oswald, sans-serif',
                 lineHeight: '1.2',
               }}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.5 }}
+              variants={{
+                hidden: { x: -100, opacity: 0 },
+                visible: {
+                  x: 0,
+                  opacity: 1,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.25, 0.1, 0.25, 1],
+                    staggerChildren: 0.04,
+                    delayChildren: 0.1,
+                  },
+                },
+              }}
             >
-              SOFTWARE ENGINEER
-            </h1>
+              {"SOFTWARE ENGINEER".split("").map((char, i) => (
+                <motion.span
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: { duration: 0.15, ease: "easeOut" },
+                    },
+                  }}
+                  style={{ display: "inline-block", whiteSpace: char === " " ? "pre" : undefined }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </motion.span>
+              ))}
+            </motion.h1>
             <Link
               href="#contact"
+              onClick={handleContactScroll}
               className={`
               ${oswald.className}
               inline-block
@@ -400,22 +454,26 @@ const Home: FC<{}> = () => {
             >
               Contact Me
             </Link>
-          </div>
+          </FadeInOnLoad>
 
-          <div
-            className="hidden lg:block relative z-10 mt-8 lg:mt-0 w-60 h-60 sm:w-72 sm:h-72 md:w-72 md:h-96 lg:w-[450px] lg:h-[500px] xl:w-[650px] xl:h-[700px] bg-cover bg-no-repeat bg-center rounded-lg order-first lg:order-last" // MODIFIED HERE
+          <motion.div
+            className="hidden lg:block relative z-10 mt-8 lg:mt-0 w-60 h-60 sm:w-72 sm:h-72 md:w-72 md:h-96 lg:w-[450px] lg:h-[500px] xl:w-[650px] xl:h-[700px] bg-cover bg-no-repeat bg-center rounded-lg order-first lg:order-last"
             style={{ backgroundImage: "url('/dp.png')" }}
-          ></div>
+            initial={{ scale: 0.75, opacity: 0.4 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: false, amount: 0.4 }}
+            transition={{ duration: 2, ease: 'easeInOut', delay: 0.1 }}
+          ></motion.div>
         </div>
 
-        <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 text-center w-full px-4 
+        <FadeInOnLoad delay={0.6} className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 text-center w-full px-4 
                       md:left-auto md:right-20 md:-translate-x-0 md:text-right md:w-auto md:px-0 z-20">
           <p className="text-xs sm:text-sm md:text-base font-normal text-gray-300">
             Software Engineer & Full-Stack Developer
           </p>
-        </div>
+        </FadeInOnLoad>
 
-        <div className="absolute bottom-4 left-4 flex flex-col space-y-2">
+        <FadeInOnLoad delay={0.5} className="absolute bottom-4 left-4 flex flex-col space-y-2">
 
           <div
 
@@ -473,7 +531,7 @@ const Home: FC<{}> = () => {
 
           </div>
 
-        </div>
+        </FadeInOnLoad>
       </section>
       <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-5"></div>
 
@@ -482,66 +540,73 @@ const Home: FC<{}> = () => {
       <section id="about" className="relative text-white py-16 md:py-24">
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center">
           {/* Left Side - Image with 3D Parallax Effect */}
-          <div className="relative w-full lg:w-1/2 flex justify-center mb-12 lg:mb-0">
+          <ParallaxLayer speed={0.15} className="relative w-full lg:w-1/2 flex justify-center mb-12 lg:mb-0">
             <ParallaxImageContainer />
-          </div>
+          </ParallaxLayer>
 
           <div className="absolute top-0 bottom-0 bg-white z-10 line-6 h-full"></div>
 
           {/* Right Side - Content */}
           <div className="w-full lg:w-1/2 lg:pl-12 xl:pl-20">
             {/* About Me Heading with underline */}
-            <div className="mb-8">
+            <ScrollReveal delay={0.1} className="mb-8">
               <h2 className="about-heading">
                 About Me
               </h2>
               <div className="about-heading-line"></div>
-            </div>
+            </ScrollReveal>
 
             {/* First Paragraph */}
-            <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
-              I am a passionate Software Engineer with extensive experience in building
-              scalable web applications and robust backend systems. I specialize in full-stack
-              development using modern technologies, delivering high-quality solutions that
-              meet complex business requirements with precision and efficiency.
-            </p>
+            <ScrollReveal delay={0.2}>
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
+                I am a passionate Software Engineer with extensive experience in building
+                scalable web applications and robust backend systems. I specialize in full-stack
+                development using modern technologies, delivering high-quality solutions that
+                meet complex business requirements with precision and efficiency.
+              </p>
+            </ScrollReveal>
 
             {/* Second Paragraph */}
-            <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-8">
-              With a strong foundation in software architecture and design patterns, I bring
-              ideas to life through clean, maintainable code. From database design to user
-              interfaces, I handle the complete development lifecycle. My expertise spans
-              React, Node.js, TypeScript, and cloud services, enabling me to create seamless
-              digital experiences that are both functional and engaging for end users.
-            </p>
+            <ScrollReveal delay={0.3}>
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-8">
+                With a strong foundation in software architecture and design patterns, I bring
+                ideas to life through clean, maintainable code. From database design to user
+                interfaces, I handle the complete development lifecycle. My expertise spans
+                React, Node.js, TypeScript, and cloud services, enabling me to create seamless
+                digital experiences that are both functional and engaging for end users.
+              </p>
+            </ScrollReveal>
 
             {/* Download Resume Button */}
-            <Link
-              href="/resume.pdf"
-              className={`
-                ${oswald.className}
-                inline-block
-                h-[50px]
-                leading-[48px]
-                text-[14px]
-                text-white
-                border
-                border-[rgba(102,102,102,0.8)]
-                px-[35px]
-                uppercase
-                tracking-[2px]
-                rounded-full
-                transition-all
-                duration-300
-                ease-in-out
-                bg-transparent
-                hover:bg-white
-                hover:text-black
-                hover:border-white
-              `}
-            >
-              Download Resume
-            </Link>
+            <ScrollReveal delay={0.4}>
+              <a
+                href="/Lahiru%20Harshana%20CV.pdf"
+                download="Lahiru Harshana CV.pdf"
+                className={`
+                  ${oswald.className}
+                  inline-block
+                  h-[50px]
+                  leading-[48px]
+                  text-[14px]
+                  text-white
+                  border
+                  border-[rgba(102,102,102,0.8)]
+                  px-[35px]
+                  uppercase
+                  tracking-[2px]
+                  rounded-full
+                  transition-all
+                  duration-300
+                  ease-in-out
+                  bg-transparent
+                  hover:bg-white
+                  hover:text-black
+                  hover:border-white
+                `}
+              >
+                Download Resume
+              </a>
+            </ScrollReveal>
           </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white z-10 line-7"></div>
@@ -598,16 +663,16 @@ const Home: FC<{}> = () => {
       100% { transform: rotate(360deg); }
     }
   `}</style>
-        <div className="text-center mb-12">
+        <ScrollReveal className="text-center mb-12">
           {/* Consider responsive text sizes for h2 as well if needed */}
           <h2 style={{ fontFamily: 'Heebo, sans-serif' }} className="text-xl md:text-2xl mb-4">
             What I Specialize In
           </h2>
           <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold">MY SERVICE</h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        </ScrollReveal>
+        <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Service Item 1 */}
-          <div className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -624,10 +689,10 @@ const Home: FC<{}> = () => {
             <p className="service-text text-center text-gray-400">
               Building end-to-end web applications using React, Next.js, Node.js, and TypeScript. From database design to user interfaces, I deliver complete solutions.
             </p>
-          </div>
+          </StaggerItem>
 
           {/* Service Item 2 */}
-          <div className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -642,10 +707,10 @@ const Home: FC<{}> = () => {
             <p className="service-text text-center text-gray-400">
               Designing robust server-side architectures, RESTful APIs, and microservices using Node.js, NestJS, PostgreSQL, and MongoDB for scalable performance.
             </p>
-          </div>
+          </StaggerItem>
 
           {/* Service Item 3 */}
-          <div className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -660,10 +725,10 @@ const Home: FC<{}> = () => {
             <p className="service-text text-center text-gray-400">
               Crafting responsive, accessible, and performant user interfaces using React, Next.js, Tailwind CSS, and modern JavaScript frameworks.
             </p>
-          </div>
+          </StaggerItem>
 
           {/* Service Item 4 */}
-          <div className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -678,10 +743,10 @@ const Home: FC<{}> = () => {
             <p className="service-text text-center text-gray-400">
               Developing cross-platform mobile applications using React Native and Flutter, delivering native-like experiences on iOS and Android.
             </p>
-          </div>
+          </StaggerItem>
 
           {/* Service Item 5 */}
-          <div className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -696,10 +761,10 @@ const Home: FC<{}> = () => {
             <p className="service-text text-center text-gray-400">
               Building secure, well-documented APIs with authentication, rate limiting, and comprehensive error handling for seamless integrations.
             </p>
-          </div>
+          </StaggerItem>
 
           {/* Service Item 6 */}
-          <div className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -714,8 +779,8 @@ const Home: FC<{}> = () => {
             <p className="service-text text-center text-gray-400">
               Implementing CI/CD pipelines, containerization with Docker, and cloud deployments on AWS and Google Cloud for reliable infrastructure.
             </p>
-          </div>
-        </div>
+          </StaggerItem>
+        </StaggerContainer>
       </section>
 
 
@@ -727,44 +792,46 @@ const Home: FC<{}> = () => {
 
         {/* Container for content, providing its own responsive padding */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-0"> {/* Added z-0 to ensure content is behind lines if lines were to overlap due to complex layouts, though typical flow keeps them separate */}
-          <div className="text-center mb-12 md:mb-16">
+          <ScrollReveal className="text-center mb-12 md:mb-16">
             <p style={{ fontFamily: 'Heebo, sans-serif' }} className="text-white text-lg md:text-xl tracking-wider font-medium">Portfolio</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-2">WORK I HAVE DONE</h2>
-          </div>
+          </ScrollReveal>
 
-          <nav className="flex justify-center mb-12 md:mb-16">
-            <ul className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 sm:gap-x-6 text-sm sm:text-base">
-              {/* Assuming filterCategoriesList is an array of strings */}
-              {filterCategoriesList.map((category) => (
-                <li key={category}>
-                  <button
-                    onClick={() => handleFilterClick(category)}
-                    className={`hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-white py-1 px-2 rounded
-                                ${activeFilter === category
-                        ? 'text-white font-semibold border-b-2 border-white'
-                        : 'text-gray-400 hover:text-gray-200 hover:border-b-2 hover:border-gray-500'
-                      }`}
-                  >
-                    {category}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <ScrollReveal delay={0.1}>
+            <nav className="flex justify-center mb-12 md:mb-16">
+              <ul className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 sm:gap-x-6 text-sm sm:text-base">
+                {/* Assuming filterCategoriesList is an array of strings */}
+                {filterCategoriesList.map((category) => (
+                  <li key={category}>
+                    <button
+                      onClick={() => handleFilterClick(category)}
+                      className={`hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-white py-1 px-2 rounded
+                                  ${activeFilter === category
+                          ? 'text-white font-semibold border-b-2 border-white'
+                          : 'text-gray-400 hover:text-gray-200 hover:border-b-2 hover:border-gray-500'
+                        }`}
+                    >
+                      {category}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {/* Assuming filteredItems is an array of objects */}
             {filteredItems.map((item) => (
-              <div key={item.id} className="bg-black aspect-square group relative overflow-hidden rounded-md"> {/* Added rounded-md for aesthetics, z-1 was on items, but lines are z-10 */}
+              <StaggerItem key={item.id} className="bg-black aspect-square group relative overflow-hidden rounded-md"> {/* Added rounded-md for aesthetics, z-1 was on items, but lines are z-10 */}
                 <img
                   src={item.src}
                   alt={item.alt}
                   className="w-full h-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105"
                 />
                 {/* Optional: Add an overlay or text on hover here if needed */}
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
           {filteredItems.length === 0 && (
             <p className="text-center text-gray-400 mt-8 text-lg">No items found for this category.</p>
@@ -777,7 +844,7 @@ const Home: FC<{}> = () => {
         <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-11"></div>
         <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-13"></div>
 
-        <div className="max-w-3xl w-full text-center">
+        <ScrollReveal className="max-w-3xl w-full text-center">
           <div
             style={{
               opacity: slideStyle.opacity,
@@ -809,7 +876,7 @@ const Home: FC<{}> = () => {
               </>
             )}
           </div>
-        </div>
+        </ScrollReveal>
 
         <div className="flex space-x-3 mt-2">
           {testimonialsData.map((testimonial, index) => (
@@ -835,70 +902,74 @@ const Home: FC<{}> = () => {
         <div className="absolute bottom-0 left-0 right-0 h-px bg-white opacity-30 z-20 line-13-bottom"></div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10"> {/* Content should be above lines if lines are on edges, or lines above content if desired via higher z-index for lines */}
-          <div className="text-center mb-12 md:mb-16">
+          <ScrollReveal className="text-center mb-12 md:mb-16">
             <p style={{ fontFamily: 'Heebo, sans-serif' }} className="text-lg md:text-xl text-white tracking-wider font-medium">
               From Our Blog
             </p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-2">LATEST NEWS</h2>
-          </div>
+          </ScrollReveal>
 
-          <nav className="flex justify-center mb-12 md:mb-16">
-            <ul className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 sm:gap-x-6 text-sm sm:text-base">
-              {blogFilterCategoriesList.map((category) => (
-                <li key={category}>
-                  <button
-                    onClick={() => handleBlogFilterClick(category)}
-                    className={`hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-white py-1 px-2 rounded
-                                ${activeBlogFilter === category
-                        ? 'text-white font-semibold border-b-2 border-white'
-                        : 'text-gray-400 hover:text-gray-200 hover:border-b-2 hover:border-gray-500'
-                      }`}
-                  >
-                    {category}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <ScrollReveal delay={0.1}>
+            <nav className="flex justify-center mb-12 md:mb-16">
+              <ul className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 sm:gap-x-6 text-sm sm:text-base">
+                {blogFilterCategoriesList.map((category) => (
+                  <li key={category}>
+                    <button
+                      onClick={() => handleBlogFilterClick(category)}
+                      className={`hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-white py-1 px-2 rounded
+                                  ${activeBlogFilter === category
+                          ? 'text-white font-semibold border-b-2 border-white'
+                          : 'text-gray-400 hover:text-gray-200 hover:border-b-2 hover:border-gray-500'
+                        }`}
+                    >
+                      {category}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredBlogPosts.map((post) => (
-              <article key={post.id} className="bg-[#222] group cursor-pointer hover:-translate-y-2 transition-transform duration-300 rounded-lg overflow-hidden">
-                <div className="relative h-48 overflow-hidden">
-                  <span className="absolute top-4 left-4 z-10 bg-white text-black text-xs font-bold px-3 py-1 rounded">
-                    {post.date}
-                  </span>
-                  <img
-                    src={post.imageSrc}
-                    alt={post.imageAlt}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
+              <StaggerItem key={post.id}>
+                <article className="bg-[#222] group cursor-pointer hover:-translate-y-2 transition-transform duration-300 rounded-lg overflow-hidden">
+                  <div className="relative h-48 overflow-hidden">
+                    <span className="absolute top-4 left-4 z-10 bg-white text-black text-xs font-bold px-3 py-1 rounded">
+                      {post.date}
+                    </span>
                     <img
-                      src={post.authorAvatarSrc}
-                      alt={post.authorName}
-                      className="w-8 h-8 rounded-full object-cover"
+                      src={post.imageSrc}
+                      alt={post.imageAlt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-gray-300">By {post.authorName}</span>
-                      <span className="text-xs text-gray-400">{post.category}</span>
-                    </div>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 hover:text-white transition-colors line-clamp-2">
-                    {post.title}
-                  </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
-                    {post.excerpt}
-                  </p>
-                  <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-sm font-semibold hover:text-white transition-colors">
-                    READ MORE &rarr;
-                  </Link>
-                </div>
-              </article>
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <img
+                        src={post.authorAvatarSrc}
+                        alt={post.authorName}
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-sm font-medium text-gray-300">By {post.authorName}</span>
+                        <span className="text-xs text-gray-400">{post.category}</span>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 hover:text-white transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-sm font-semibold hover:text-white transition-colors">
+                      READ MORE &rarr;
+                    </Link>
+                  </div>
+                </article>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
           {filteredBlogPosts.length === 0 && (
             <p className="text-center text-gray-400 mt-8 text-lg">No posts found for this category.</p>
@@ -908,18 +979,18 @@ const Home: FC<{}> = () => {
 
       <section id="contact" className=" text-white py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60"> {/* Added a dark section background, adjust as needed */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 md:mb-16">
+          <ScrollReveal className="text-center mb-12 md:mb-16">
             <p style={{ fontFamily: 'Heebo, sans-serif' }} className="text-lg md:text-xl text-white tracking-wider font-medium">
               Get in touch
             </p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-2">
               CONTACT
             </h2>
-          </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
             {/* Left Column: Contact Information */}
-            <div className="text-gray-300">
+            <ScrollReveal delay={0.1} direction="left" className="text-gray-300">
               <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
                 Get In Touch
               </h3>
@@ -945,10 +1016,10 @@ const Home: FC<{}> = () => {
                   <a href="mailto:lharshana2002@gmail.com">lharshana2002@gmail.com</a>
                 </p>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Right Column: Contact Form */}
-            <div>
+            <ScrollReveal delay={0.2} direction="right">
               <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
                 Quick Contact Form
               </h3>
@@ -1022,11 +1093,11 @@ const Home: FC<{}> = () => {
                   </button>
                 </div>
               </form>
-            </div>
+            </ScrollReveal>
           </div>
 
           {/* Google Map */}
-          <div className="mt-16 w-full h-[300px] sm:h-[400px] rounded-lg overflow-hidden shadow-2xl relative z-10 border border-gray-800">
+          <ScrollReveal delay={0.3} className="mt-16 w-full h-[300px] sm:h-[400px] rounded-lg overflow-hidden shadow-2xl relative z-10 border border-gray-800">
             <iframe
               title="Weligama Location"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31745.03423715102!2d80.41369527626949!3d5.973412351239924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae13fce224a919d%3A0xe542617f6942b08!2sWeligama!5e0!3m2!1sen!2slk!4v1706200000000!5m2!1sen!2slk"
@@ -1037,7 +1108,7 @@ const Home: FC<{}> = () => {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -1047,7 +1118,7 @@ const Home: FC<{}> = () => {
         <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-11"></div>
         <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white opacity-30 z-10"></div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative z-10">
+        <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center relative z-10">
           {/* Logo / Brand Icon */}
           <div className="mb-8">
             <svg
@@ -1069,25 +1140,26 @@ const Home: FC<{}> = () => {
           </div>
 
           {/* Social Icons */}
-          <div className="flex gap-4 mb-8">
+          <StaggerContainer staggerDelay={0.1} className="flex gap-4 mb-8">
             {socialLinks.map((social) => (
-              <a
-                key={social.id}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-gray-400 hover:bg-white hover:text-black transition-all duration-300 border border-gray-800"
-              >
-                {social.icon}
-              </a>
+              <StaggerItem key={social.id}>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-gray-400 hover:bg-white hover:text-black transition-all duration-300 border border-gray-800"
+                >
+                  {social.icon}
+                </a>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
           {/* Copyright */}
           <p className="text-gray-500 text-sm text-center">
             Copyright © 2026 Lahiru Harshana. All Rights Reserved.
           </p>
-        </div>
+        </ScrollReveal>
       </footer>
 
     </main>

@@ -8,6 +8,7 @@ import {
   getWebsiteStructuredData,
   getProfessionalServiceStructuredData,
 } from '@/lib/seo-config';
+import ClientProviders from './components/ClientProviders';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -224,7 +225,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}
       >
-        {children}
+        <ClientProviders>
+          {children}
+        </ClientProviders>
       </body>
     </html>
   );
