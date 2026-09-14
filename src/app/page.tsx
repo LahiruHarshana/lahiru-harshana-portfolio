@@ -54,6 +54,15 @@ interface BlogPost {
   category: string;
 }
 
+interface PortfolioItem {
+  id: number;
+  src: string;
+  alt: string;
+  title: string;
+  category: string;
+  href?: string;
+}
+
 // 3D Parallax Image Container Component
 const ParallaxImageContainer: FC = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -231,47 +240,94 @@ const Home: FC<{}> = () => {
   ];
   const currentTestimonial = testimonialsData[currentIndex];
 
-  const allPortfolioItemsData = [
+  const allPortfolioItemsData: PortfolioItem[] = [
     {
       id: 1,
-      src: "/work/project-1.png",
-      alt: "E-Commerce Web App",
-      category: "Web Applications"
+      src: "/work/project-bestbooks.jpg",
+      alt: "Best Books — Sri Lanka's premier online bookstore with bilingual search and bestsellers",
+      title: "Best Books",
+      category: "Web Applications",
+      href: "https://www.bestbooks.lk",
     },
     {
       id: 2,
-      src: "/work/project-2.png",
-      alt: "Mobile App Interface",
-      category: "Mobile Apps"
+      src: "/work/project-ceylon-cinnamon.jpg",
+      alt: "Ceylon Cinnamon Company — estate-to-export cinnamon brand site for wholesale and retail buyers",
+      title: "Ceylon Cinnamon Company",
+      category: "Web Applications",
+      href: "https://www.ceyloncinnamoncompany.com",
     },
     {
       id: 3,
-      src: "/work/project-3.png",
-      alt: "Backend Dashboard",
-      category: "Backend Systems"
+      src: "/work/project-roots-groceries.jpg",
+      alt: "Roots Groceries — Sri Lankan grocery e-commerce shop for spices, tea, and pantry staples",
+      title: "Roots Groceries",
+      category: "Web Applications",
+      href: "https://www.rootsgroceries.com",
     },
     {
       id: 4,
-      src: "/work/project-4.png",
-      alt: "Web Platform",
-      category: "Web Applications"
+      src: "/work/project-gh-tours.jpg",
+      alt: "GH Tours and Bike Rentals — Sri Lanka tours, airport hire, and bike rental booking site",
+      title: "GH Tours & Bike Rentals",
+      category: "Web Applications",
+      href: "https://www.ghtoursandbikerentals.com",
     },
     {
       id: 5,
-      src: "/work/project-5.jpg",
-      alt: "Mobile Application",
-      category: "Mobile Apps"
+      src: "/work/project-riverwood-villa.jpg",
+      alt: "Riverwood Villa Weligama — private riverside villa booking site with availability search",
+      title: "Riverwood Villa",
+      category: "Web Applications",
+      href: "https://www.riverwoodvillaweligama.com",
     },
     {
       id: 6,
-      src: "/work/project-6.jpg",
-      alt: "EZ Cart Login",
-      category: "Mobile Apps"
+      src: "/work/project-1.png",
+      alt: "E-Commerce Web App",
+      title: "E-Commerce Web App",
+      category: "Web Applications"
     },
     {
       id: 7,
+      src: "/work/project-2.png",
+      alt: "Mobile App Interface",
+      title: "Mobile App Interface",
+      category: "Mobile Apps"
+    },
+    {
+      id: 8,
+      src: "/work/project-3.png",
+      alt: "Backend Dashboard",
+      title: "Backend Dashboard",
+      category: "Backend Systems"
+    },
+    {
+      id: 9,
+      src: "/work/project-4.png",
+      alt: "Web Platform",
+      title: "Web Platform",
+      category: "Web Applications"
+    },
+    {
+      id: 10,
+      src: "/work/project-5.jpg",
+      alt: "Mobile Application",
+      title: "Mobile Application",
+      category: "Mobile Apps"
+    },
+    {
+      id: 11,
+      src: "/work/project-6.jpg",
+      alt: "EZ Cart Login",
+      title: "EZ Cart",
+      category: "Mobile Apps"
+    },
+    {
+      id: 12,
       src: "/work/project-7.png",
       alt: "Elysian Travels",
+      title: "Elysian Travels",
       category: "Web Applications"
     },
   ];
@@ -820,17 +876,47 @@ const Home: FC<{}> = () => {
           </ScrollReveal>
 
           <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {/* Assuming filteredItems is an array of objects */}
-            {filteredItems.map((item) => (
-              <StaggerItem key={item.id} className="bg-black aspect-square group relative overflow-hidden rounded-md"> {/* Added rounded-md for aesthetics, z-1 was on items, but lines are z-10 */}
-                <img
-                  src={item.src}
-                  alt={item.alt}
-                  className="w-full h-full object-cover transform transition-transform duration-500 ease-in-out group-hover:scale-105"
-                />
-                {/* Optional: Add an overlay or text on hover here if needed */}
-              </StaggerItem>
-            ))}
+            {filteredItems.map((item) => {
+              const card = (
+                <>
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover object-top transform transition-transform duration-500 ease-in-out group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition-colors duration-300 flex flex-col items-center justify-center px-4 text-center">
+                    <p className="text-white text-lg sm:text-xl font-semibold opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                      {item.title}
+                    </p>
+                    {item.href && (
+                      <p className="mt-2 text-xs sm:text-sm tracking-widest uppercase text-gray-300 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75">
+                        View live site
+                      </p>
+                    )}
+                  </div>
+                </>
+              );
+
+              return (
+                <StaggerItem key={item.id} className="bg-black aspect-square group relative overflow-hidden rounded-md">
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 block"
+                      aria-label={`Open ${item.title} live site`}
+                    >
+                      {card}
+                    </a>
+                  ) : (
+                    card
+                  )}
+                </StaggerItem>
+              );
+            })}
           </StaggerContainer>
 
           {filteredItems.length === 0 && (
