@@ -223,7 +223,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${oswald.className} antialiased bg-[#202020]`}
       >
         <ClientProviders>
           {children}

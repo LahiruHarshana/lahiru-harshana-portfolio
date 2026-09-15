@@ -19,6 +19,17 @@ import {
   StaggerItem,
   FadeInOnLoad,
 } from './components/ScrollAnimations';
+import PortfolioProjectCard from './components/PortfolioProjectCard';
+import {
+  portfolioStats,
+  skillCategories,
+  experienceData,
+  processSteps,
+  heroHighlights,
+  aboutExtendedContent,
+  portfolioProjects,
+  portfolioFilterCategories,
+} from '@/lib/portfolio-data';
 const oswald = Oswald({
   weight: ['400', '700'],
   subsets: ['latin'],
@@ -52,15 +63,6 @@ interface BlogPost {
   authorName: string;
   date: string;
   category: string;
-}
-
-interface PortfolioItem {
-  id: number;
-  src: string;
-  alt: string;
-  title: string;
-  category: string;
-  href?: string;
 }
 
 // 3D Parallax Image Container Component
@@ -240,99 +242,8 @@ const Home: FC<{}> = () => {
   ];
   const currentTestimonial = testimonialsData[currentIndex];
 
-  const allPortfolioItemsData: PortfolioItem[] = [
-    {
-      id: 1,
-      src: "/work/project-bestbooks.jpg",
-      alt: "Best Books — Sri Lanka's premier online bookstore with bilingual search and bestsellers",
-      title: "Best Books",
-      category: "Web Applications",
-      href: "https://www.bestbooks.lk",
-    },
-    {
-      id: 2,
-      src: "/work/project-ceylon-cinnamon.jpg",
-      alt: "Ceylon Cinnamon Company — estate-to-export cinnamon brand site for wholesale and retail buyers",
-      title: "Ceylon Cinnamon Company",
-      category: "Web Applications",
-      href: "https://www.ceyloncinnamoncompany.com",
-    },
-    {
-      id: 3,
-      src: "/work/project-roots-groceries.jpg",
-      alt: "Roots Groceries — Sri Lankan grocery e-commerce shop for spices, tea, and pantry staples",
-      title: "Roots Groceries",
-      category: "Web Applications",
-      href: "https://www.rootsgroceries.com",
-    },
-    {
-      id: 4,
-      src: "/work/project-gh-tours.jpg",
-      alt: "GH Tours and Bike Rentals — Sri Lanka tours, airport hire, and bike rental booking site",
-      title: "GH Tours & Bike Rentals",
-      category: "Web Applications",
-      href: "https://www.ghtoursandbikerentals.com",
-    },
-    {
-      id: 5,
-      src: "/work/project-riverwood-villa.jpg",
-      alt: "Riverwood Villa Weligama — private riverside villa booking site with availability search",
-      title: "Riverwood Villa",
-      category: "Web Applications",
-      href: "https://www.riverwoodvillaweligama.com",
-    },
-    {
-      id: 6,
-      src: "/work/project-1.png",
-      alt: "E-Commerce Web App",
-      title: "E-Commerce Web App",
-      category: "Web Applications"
-    },
-    {
-      id: 7,
-      src: "/work/project-2.png",
-      alt: "Mobile App Interface",
-      title: "Mobile App Interface",
-      category: "Mobile Apps"
-    },
-    {
-      id: 8,
-      src: "/work/project-3.png",
-      alt: "Backend Dashboard",
-      title: "Backend Dashboard",
-      category: "Backend Systems"
-    },
-    {
-      id: 9,
-      src: "/work/project-4.png",
-      alt: "Web Platform",
-      title: "Web Platform",
-      category: "Web Applications"
-    },
-    {
-      id: 10,
-      src: "/work/project-5.jpg",
-      alt: "Mobile Application",
-      title: "Mobile Application",
-      category: "Mobile Apps"
-    },
-    {
-      id: 11,
-      src: "/work/project-6.jpg",
-      alt: "EZ Cart Login",
-      title: "EZ Cart",
-      category: "Mobile Apps"
-    },
-    {
-      id: 12,
-      src: "/work/project-7.png",
-      alt: "Elysian Travels",
-      title: "Elysian Travels",
-      category: "Web Applications"
-    },
-  ];
-  const [filteredItems, setFilteredItems] = useState(allPortfolioItemsData);
-  const filterCategoriesList = ["All", "Web Applications", "Mobile Apps", "Backend Systems"];
+  const [filteredItems, setFilteredItems] = useState(portfolioProjects);
+  const filterCategoriesList = [...portfolioFilterCategories];
 
   const [filteredBlogPosts, setFilteredBlogPosts] = useState(blogPostsData);
   const blogFilterCategoriesList = ["All", "Frontend Development", "Backend Development", "DevOps & Cloud"];
@@ -340,9 +251,9 @@ const Home: FC<{}> = () => {
   const TRANSITION_DURATION = 300;
   useEffect(() => {
     if (activeFilter === "All") {
-      setFilteredItems(allPortfolioItemsData);
+      setFilteredItems(portfolioProjects);
     } else {
-      const newFilteredItems = allPortfolioItemsData.filter(
+      const newFilteredItems = portfolioProjects.filter(
         (item) => item.category === activeFilter
       );
       setFilteredItems(newFilteredItems);
@@ -408,7 +319,7 @@ const Home: FC<{}> = () => {
     }, TRANSITION_DURATION);
   };
   return (
-    <main className="relative bg-[#202020] text-white">
+    <main className="relative bg-[#202020] text-white subtle-texture">
       {/* Hamburger Menu Button */}
       <HamburgerButton
         onClick={() => setIsSlideMenuOpen(true)}
@@ -483,43 +394,50 @@ const Home: FC<{}> = () => {
                 </motion.span>
               ))}
             </motion.h1>
+            <div className="mb-6 max-w-xl mx-auto lg:mx-0">
+              <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-5">
+                I design and build scalable web applications, RESTful APIs, and cloud-ready systems
+                for startups and businesses — from idea to production.
+              </p>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6">
+                {heroHighlights.map((item) => (
+                  <span key={item} className="hero-tag">{item}</span>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-wrap justify-center lg:justify-start gap-3">
             <Link
               href="#contact"
               onClick={handleContactScroll}
-              className={`
-              ${oswald.className}
-              inline-block
-              h-[45px] sm:h-[50px]
-              leading-[42px] sm:leading-[47px]
-              text-[14px] sm:text-[16px]
-              text-white
-              border
-              border-[rgba(102,102,102,0.8)]
-              px-[25px] sm:px-[30px]
-              uppercase
-              tracking-[1px]
-              rounded-full
-              transition-all
-              duration-300
-              ease-in-out
-              bg-transparent
-              hover:bg-gray-200
-              hover:text-black
-              focus:outline-none focus:ring-2 focus:ring-gray-400
-            `}
+              className={`${oswald.className} btn-modern`}
             >
               Contact Me
             </Link>
+            <Link
+              href="#portfolio"
+              className={`${oswald.className} btn-outline`}
+            >
+              View My Work
+            </Link>
+            </div>
           </FadeInOnLoad>
 
           <motion.div
-            className="hidden lg:block relative z-10 mt-8 lg:mt-0 w-60 h-60 sm:w-72 sm:h-72 md:w-72 md:h-96 lg:w-[450px] lg:h-[500px] xl:w-[650px] xl:h-[700px] bg-cover bg-no-repeat bg-center rounded-lg order-first lg:order-last"
-            style={{ backgroundImage: "url('/dp.png')" }}
+            className="hidden lg:block relative z-10 mt-8 lg:mt-0 w-60 h-60 sm:w-72 sm:h-72 md:w-72 md:h-96 lg:w-[450px] lg:h-[500px] xl:w-[650px] xl:h-[700px] order-first lg:order-last rounded-2xl overflow-hidden shadow-2xl"
             initial={{ scale: 0.75, opacity: 0.4 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: false, amount: 0.4 }}
             transition={{ duration: 2, ease: 'easeInOut', delay: 0.1 }}
-          ></motion.div>
+          >
+            <Image
+              src="/dp.png"
+              alt="Lahiru Harshana"
+              fill
+              className="object-cover object-top"
+              style={{ filter: 'grayscale(100%)' }}
+            />
+            <div className="absolute inset-0 ring-1 ring-white/10 rounded-2xl pointer-events-none" />
+          </motion.div>
         </div>
 
         <FadeInOnLoad delay={0.6} className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 text-center w-full px-4 
@@ -575,7 +493,7 @@ const Home: FC<{}> = () => {
 
                 rel="noopener noreferrer"
 
-                className="text-white hover:text-gray-300 text-1xl mb-6"
+                className="social-link-btn mb-4"
 
               >
 
@@ -591,6 +509,17 @@ const Home: FC<{}> = () => {
       </section>
       <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-5"></div>
 
+      {/* Stats */}
+      <section id="stats" className="relative py-12 md:py-16 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60">
+        <StaggerContainer staggerDelay={0.08} className="container mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {portfolioStats.map((stat) => (
+            <StaggerItem key={stat.label} className="stat-card">
+              <p className="stat-value">{stat.value}</p>
+              <p className="stat-label">{stat.label}</p>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </section>
 
       {/* About Me Section with 3D Parallax */}
       <section id="about" className="relative text-white py-16 md:py-24">
@@ -612,24 +541,21 @@ const Home: FC<{}> = () => {
               <div className="about-heading-line"></div>
             </ScrollReveal>
 
-            {/* First Paragraph */}
             <ScrollReveal delay={0.2}>
               <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
-                I am a passionate Software Engineer with extensive experience in building
-                scalable web applications and robust backend systems. I specialize in full-stack
-                development using modern technologies, delivering high-quality solutions that
-                meet complex business requirements with precision and efficiency.
+                {aboutExtendedContent.intro}
               </p>
             </ScrollReveal>
 
-            {/* Second Paragraph */}
             <ScrollReveal delay={0.3}>
+              <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-6">
+                {aboutExtendedContent.focus}
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.35}>
               <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-8">
-                With a strong foundation in software architecture and design patterns, I bring
-                ideas to life through clean, maintainable code. From database design to user
-                interfaces, I handle the complete development lifecycle. My expertise spans
-                React, Node.js, TypeScript, and cloud services, enabling me to create seamless
-                digital experiences that are both functional and engaging for end users.
+                {aboutExtendedContent.approach}
               </p>
             </ScrollReveal>
 
@@ -638,27 +564,7 @@ const Home: FC<{}> = () => {
               <a
                 href="/Lahiru%20Harshana%20CV.pdf"
                 download="Lahiru Harshana CV.pdf"
-                className={`
-                  ${oswald.className}
-                  inline-block
-                  h-[50px]
-                  leading-[48px]
-                  text-[14px]
-                  text-white
-                  border
-                  border-[rgba(102,102,102,0.8)]
-                  px-[35px]
-                  uppercase
-                  tracking-[2px]
-                  rounded-full
-                  transition-all
-                  duration-300
-                  ease-in-out
-                  bg-transparent
-                  hover:bg-white
-                  hover:text-black
-                  hover:border-white
-                `}
+                className={`${oswald.className} btn-modern`}
               >
                 Download Resume
               </a>
@@ -669,23 +575,83 @@ const Home: FC<{}> = () => {
         <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-8"></div>
       </section>
 
+      {/* Skills & Tech Stack */}
+      <section id="skills" className="relative text-white py-16 md:py-24 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60">
+        <ScrollReveal className="text-center mb-12 md:mb-16">
+          <p className="section-eyebrow">Technical Expertise</p>
+          <h2 className="section-title">SKILLS & TECH STACK</h2>
+          <div className="section-accent-line" />
+        </ScrollReveal>
+        <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {skillCategories.map((category) => (
+            <StaggerItem key={category.title} className="surface-card p-6">
+              <h3 className="text-lg font-semibold text-white mb-4">{category.title}</h3>
+              <div className="flex flex-wrap gap-2">
+                {category.skills.map((skill) => (
+                  <span key={skill} className="skill-tag">{skill}</span>
+                ))}
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </section>
+
+      {/* Experience */}
+      <section id="experience" className="relative text-white py-16 md:py-24 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60">
+        <div className="absolute top-0 left-0 right-0 h-px bg-white opacity-30 z-10"></div>
+        <ScrollReveal className="text-center mb-12 md:mb-16">
+          <p className="section-eyebrow">Career Journey</p>
+          <h2 className="section-title">WORK EXPERIENCE</h2>
+          <div className="section-accent-line" />
+        </ScrollReveal>
+        <StaggerContainer staggerDelay={0.1} className="max-w-4xl mx-auto space-y-6">
+          {experienceData.map((job) => (
+            <StaggerItem key={job.id} className="experience-card">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                <div>
+                  <h3 className="text-xl font-semibold text-white">{job.role}</h3>
+                  <p className="text-gray-300 mt-1">{job.company}</p>
+                </div>
+                <div className="text-sm text-gray-500 sm:text-right shrink-0">
+                  <p>{job.period}</p>
+                  <p>{job.location} · {job.type}</p>
+                </div>
+              </div>
+              <ul className="space-y-2 mt-4">
+                {job.highlights.map((point) => (
+                  <li key={point} className="text-gray-400 text-sm leading-relaxed flex gap-2">
+                    <span className="text-gray-600 shrink-0">—</span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </section>
+
       <section id="services" className="relative text-white py-16 px-6 sm:px-10 md:px-16 lg:px-24 xl:px-32 2xl:px-60 service-section">
         <style jsx>{`
     .services-icon-wrapper {
       position: relative;
       z-index: 1;
-      width: 100px; /* Or use Tailwind: w-24 h-24 or w-[100px] h-[100px] */
+      width: 100px;
       height: 100px;
       border: 1px solid #666;
-      background: transparent;
+      background: rgba(255, 255, 255, 0.02);
       box-sizing: content-box;
       border-radius: 50%;
       color: rgb(221, 221, 221);
-      margin-left: auto; /* Changed from margin: auto to allow text-align on parent */
-      margin-right: auto; /* Changed from margin: auto to allow text-align on parent */
+      margin-left: auto;
+      margin-right: auto;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .services-wrapper:hover .services-icon-wrapper {
+      border-color: #999;
+      background: rgba(255, 255, 255, 0.04);
     }
     .service-dot {
       width: 100%;
@@ -720,15 +686,13 @@ const Home: FC<{}> = () => {
     }
   `}</style>
         <ScrollReveal className="text-center mb-12">
-          {/* Consider responsive text sizes for h2 as well if needed */}
-          <h2 style={{ fontFamily: 'Heebo, sans-serif' }} className="text-xl md:text-2xl mb-4">
-            What I Specialize In
-          </h2>
-          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold">MY SERVICE</h3>
+          <p className="section-eyebrow">What I Specialize In</p>
+          <h3 className="section-title">MY SERVICE</h3>
+          <div className="section-accent-line" />
         </ScrollReveal>
         <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Service Item 1 */}
-          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="surface-card p-8 services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -748,7 +712,7 @@ const Home: FC<{}> = () => {
           </StaggerItem>
 
           {/* Service Item 2 */}
-          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="surface-card p-8 services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -766,7 +730,7 @@ const Home: FC<{}> = () => {
           </StaggerItem>
 
           {/* Service Item 3 */}
-          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="surface-card p-8 services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -784,7 +748,7 @@ const Home: FC<{}> = () => {
           </StaggerItem>
 
           {/* Service Item 4 */}
-          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="surface-card p-8 services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -802,7 +766,7 @@ const Home: FC<{}> = () => {
           </StaggerItem>
 
           {/* Service Item 5 */}
-          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="surface-card p-8 services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -820,7 +784,7 @@ const Home: FC<{}> = () => {
           </StaggerItem>
 
           {/* Service Item 6 */}
-          <StaggerItem className="bg-[#222] p-6 rounded-lg transition-all services-wrapper">
+          <StaggerItem className="surface-card p-8 services-wrapper">
             <div className="text-center mb-4">
               <div className="mb-6">
                 <div className="services-icon-wrapper">
@@ -839,6 +803,24 @@ const Home: FC<{}> = () => {
         </StaggerContainer>
       </section>
 
+      {/* Development Process */}
+      <section id="process" className="relative text-white py-16 md:py-24 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60">
+        <ScrollReveal className="text-center mb-12 md:mb-16">
+          <p className="section-eyebrow">How I Work</p>
+          <h2 className="section-title">DEVELOPMENT PROCESS</h2>
+          <div className="section-accent-line" />
+        </ScrollReveal>
+        <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {processSteps.map((item) => (
+            <StaggerItem key={item.step} className="process-step">
+              <p className="process-number">{item.step}</p>
+              <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+      </section>
+
 
       <section id="portfolio" className="relative text-white py-12 sm:py-16 md:py-24 lg:py-32 xl:py-40 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60">
         {/* Horizontal line at the top of the section */}
@@ -849,23 +831,22 @@ const Home: FC<{}> = () => {
         {/* Container for content, providing its own responsive padding */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-0"> {/* Added z-0 to ensure content is behind lines if lines were to overlap due to complex layouts, though typical flow keeps them separate */}
           <ScrollReveal className="text-center mb-12 md:mb-16">
-            <p style={{ fontFamily: 'Heebo, sans-serif' }} className="text-white text-lg md:text-xl tracking-wider font-medium">Portfolio</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-2">WORK I HAVE DONE</h2>
+            <p className="section-eyebrow">Portfolio</p>
+            <h2 className="section-title">WORK I HAVE DONE</h2>
+            <div className="section-accent-line" />
+            <p className="mt-6 max-w-2xl mx-auto text-gray-400 text-sm sm:text-base leading-relaxed">
+              Selected client work and personal builds — production sites, mobile apps, and backend systems.
+            </p>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.1}>
-            <nav className="flex justify-center mb-12 md:mb-16">
-              <ul className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 sm:gap-x-6 text-sm sm:text-base">
-                {/* Assuming filterCategoriesList is an array of strings */}
+          <ScrollReveal delay={0.1} className="flex justify-center mb-12 md:mb-16">
+            <nav aria-label="Filter portfolio projects">
+              <ul className="portfolio-filter-bar list-none m-0 p-0">
                 {filterCategoriesList.map((category) => (
                   <li key={category}>
                     <button
                       onClick={() => handleFilterClick(category)}
-                      className={`hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-white py-1 px-2 rounded
-                                  ${activeFilter === category
-                          ? 'text-white font-semibold border-b-2 border-white'
-                          : 'text-gray-400 hover:text-gray-200 hover:border-b-2 hover:border-gray-500'
-                        }`}
+                      className={`filter-pill ${activeFilter === category ? 'active' : ''}`}
                     >
                       {category}
                     </button>
@@ -875,48 +856,12 @@ const Home: FC<{}> = () => {
             </nav>
           </ScrollReveal>
 
-          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {filteredItems.map((item) => {
-              const card = (
-                <>
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover object-top transform transition-transform duration-500 ease-in-out group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition-colors duration-300 flex flex-col items-center justify-center px-4 text-center">
-                    <p className="text-white text-lg sm:text-xl font-semibold opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                      {item.title}
-                    </p>
-                    {item.href && (
-                      <p className="mt-2 text-xs sm:text-sm tracking-widest uppercase text-gray-300 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75">
-                        View live site
-                      </p>
-                    )}
-                  </div>
-                </>
-              );
-
-              return (
-                <StaggerItem key={item.id} className="bg-black aspect-square group relative overflow-hidden rounded-md">
-                  {item.href ? (
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute inset-0 block"
-                      aria-label={`Open ${item.title} live site`}
-                    >
-                      {card}
-                    </a>
-                  ) : (
-                    card
-                  )}
-                </StaggerItem>
-              );
-            })}
+          <StaggerContainer staggerDelay={0.08} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+            {filteredItems.map((item) => (
+              <StaggerItem key={item.id} className="h-full">
+                <PortfolioProjectCard project={item} />
+              </StaggerItem>
+            ))}
           </StaggerContainer>
 
           {filteredItems.length === 0 && (
@@ -989,10 +934,9 @@ const Home: FC<{}> = () => {
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10"> {/* Content should be above lines if lines are on edges, or lines above content if desired via higher z-index for lines */}
           <ScrollReveal className="text-center mb-12 md:mb-16">
-            <p style={{ fontFamily: 'Heebo, sans-serif' }} className="text-lg md:text-xl text-white tracking-wider font-medium">
-              From Our Blog
-            </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-2">LATEST NEWS</h2>
+            <p className="section-eyebrow">From Our Blog</p>
+            <h2 className="section-title">LATEST NEWS</h2>
+            <div className="section-accent-line" />
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
@@ -1002,11 +946,7 @@ const Home: FC<{}> = () => {
                   <li key={category}>
                     <button
                       onClick={() => handleBlogFilterClick(category)}
-                      className={`hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-white py-1 px-2 rounded
-                                  ${activeBlogFilter === category
-                          ? 'text-white font-semibold border-b-2 border-white'
-                          : 'text-gray-400 hover:text-gray-200 hover:border-b-2 hover:border-gray-500'
-                        }`}
+                      className={`filter-pill ${activeBlogFilter === category ? 'active' : ''}`}
                     >
                       {category}
                     </button>
@@ -1019,7 +959,7 @@ const Home: FC<{}> = () => {
           <StaggerContainer staggerDelay={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredBlogPosts.map((post) => (
               <StaggerItem key={post.id}>
-                <article className="bg-[#222] group cursor-pointer hover:-translate-y-2 transition-transform duration-300 rounded-lg overflow-hidden">
+                <article className="blog-card group cursor-pointer">
                   <div className="relative h-48 overflow-hidden">
                     <span className="absolute top-4 left-4 z-10 bg-white text-black text-xs font-bold px-3 py-1 rounded">
                       {post.date}
@@ -1066,12 +1006,9 @@ const Home: FC<{}> = () => {
       <section id="contact" className=" text-white py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-60"> {/* Added a dark section background, adjust as needed */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="text-center mb-12 md:mb-16">
-            <p style={{ fontFamily: 'Heebo, sans-serif' }} className="text-lg md:text-xl text-white tracking-wider font-medium">
-              Get in touch
-            </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-2">
-              CONTACT
-            </h2>
+            <p className="section-eyebrow">Get in touch</p>
+            <h2 className="section-title">CONTACT</h2>
+            <div className="section-accent-line" />
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
@@ -1080,10 +1017,10 @@ const Home: FC<{}> = () => {
               <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
                 Get In Touch
               </h3>
-              <p className="leading-relaxed mb-8 text-gray-400 text-base sm:text-lg"> {/* Added responsive text size */}
-                Whether you need a full-stack web application, API development, or mobile app,
-                I'm here to help bring your ideas to life. Let's discuss how I can contribute
-                to your next project.
+              <p className="leading-relaxed mb-8 text-gray-400 text-base sm:text-lg">
+                Available for freelance projects, contract work, and full-time opportunities.
+                I typically respond within 24 hours. Let&apos;s discuss your requirements,
+                timeline, and how I can help ship your next product.
               </p>
 
               <div className="mb-6">
@@ -1119,7 +1056,7 @@ const Home: FC<{}> = () => {
                       name="name"
                       id="name"
                       placeholder="Your Name"
-                      className="w-full bg-transparent text-white border border-gray-600 rounded-md py-3 px-4 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 placeholder-gray-400"
+                      className="modern-input"
                     />
                   </div>
                   <div>
@@ -1130,7 +1067,7 @@ const Home: FC<{}> = () => {
                       name="email"
                       id="email"
                       placeholder="Your Email"
-                      className="w-full bg-transparent text-white border border-gray-600 rounded-md py-3 px-4 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 placeholder-gray-400"
+                      className="modern-input"
                     />
                   </div>
                 </div>
@@ -1143,7 +1080,7 @@ const Home: FC<{}> = () => {
                       name="phone"
                       id="phone"
                       placeholder="Your Phone"
-                      className="w-full bg-transparent text-white border border-gray-600 rounded-md py-3 px-4 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 placeholder-gray-400"
+                      className="modern-input"
                     />
                   </div>
                   <div>
@@ -1154,7 +1091,7 @@ const Home: FC<{}> = () => {
                       name="form_address"
                       id="form_address"
                       placeholder="Address"
-                      className="w-full bg-transparent text-white border border-gray-600 rounded-md py-3 px-4 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 placeholder-gray-400"
+                      className="modern-input"
                     />
                   </div>
                 </div>
@@ -1166,14 +1103,14 @@ const Home: FC<{}> = () => {
                     id="message"
                     rows={5}
                     placeholder="Your Message"
-                    className="w-full bg-transparent text-white border border-gray-600 rounded-md py-3 px-4 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-colors duration-200 placeholder-gray-400"
+                    className="modern-input resize-none"
                   ></textarea>
                 </div>
                 <div> {/* Wrapped button in a div for consistent spacing from space-y on form */}
                   <button
                     type="submit"
                     style={{ fontFamily: 'Heebo, sans-serif' }}
-                    className="field  text-white font-medium py-3 px-8 rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#111111] focus:ring-sky-500"
+                    className="field text-white font-medium py-3 px-8 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#111111] focus:ring-gray-400"
                   >
                     Submit
                   </button>
@@ -1183,7 +1120,7 @@ const Home: FC<{}> = () => {
           </div>
 
           {/* Google Map */}
-          <ScrollReveal delay={0.3} className="mt-16 w-full h-[300px] sm:h-[400px] rounded-lg overflow-hidden shadow-2xl relative z-10 border border-gray-800">
+          <ScrollReveal delay={0.3} className="mt-16 w-full h-[300px] sm:h-[400px] rounded-2xl overflow-hidden shadow-2xl relative z-10 border border-gray-800">
             <iframe
               title="Weligama Location"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31745.03423715102!2d80.41369527626949!3d5.973412351239924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae13fce224a919d%3A0xe542617f6942b08!2sWeligama!5e0!3m2!1sen!2slk!4v1706200000000!5m2!1sen!2slk"
@@ -1233,7 +1170,7 @@ const Home: FC<{}> = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-gray-400 hover:bg-white hover:text-black transition-all duration-300 border border-gray-800"
+                  className="w-10 h-10 rounded-full bg-[#1a1a1a] flex items-center justify-center text-gray-400 hover:bg-white hover:text-black transition-all duration-300 border border-gray-800 hover:-translate-y-0.5"
                 >
                   {social.icon}
                 </a>

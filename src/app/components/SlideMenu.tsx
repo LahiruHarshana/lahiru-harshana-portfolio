@@ -28,6 +28,16 @@ const menuItems: MenuItem[] = [
     thumbnail: '/assets/menu/about-preview.png',
   },
   {
+    id: 'skills',
+    label: 'Skills & Tech Stack',
+    thumbnail: '/assets/menu/services-preview.png',
+  },
+  {
+    id: 'experience',
+    label: 'Work Experience',
+    thumbnail: '/assets/menu/about-preview.png',
+  },
+  {
     id: 'services',
     label: 'My Service',
     thumbnail: '/assets/menu/services-preview.png',
@@ -104,12 +114,12 @@ const SlideMenu: FC<SlideMenuProps> = ({ isOpen, onClose }) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.4, ease: 'easeInOut' }}
-            className="fixed right-0 top-0 h-full w-full sm:w-[420px] md:w-[480px] bg-[#1a1a1a] z-[999] shadow-2xl overflow-y-auto"
+            className="fixed right-0 top-0 h-full w-full sm:w-[420px] md:w-[480px] bg-[#1a1a1a]/95 backdrop-blur-xl z-[999] shadow-2xl overflow-y-auto border-l border-gray-800"
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-full border border-gray-600 text-white hover:bg-white hover:text-black transition-all duration-300 z-10"
+              className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center rounded-xl nav-surface text-white hover:bg-white hover:text-black transition-all duration-300 z-10"
               aria-label="Close menu"
             >
               <IoClose size={24} />
@@ -126,7 +136,7 @@ const SlideMenu: FC<SlideMenuProps> = ({ isOpen, onClose }) => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + index * 0.05, duration: 0.3 }}
                     onClick={() => handleMenuClick(item.id)}
-                    className="group relative bg-[#252525] rounded-xl overflow-hidden aspect-[16/5] hover:ring-2 hover:ring-white/60 hover:shadow-lg hover:shadow-white/10 transition-all duration-300 w-full"
+                    className="group relative bg-[#252525] rounded-xl overflow-hidden aspect-[16/5] hover:ring-1 hover:ring-gray-500 hover:shadow-lg transition-all duration-300 w-full border border-gray-800"
                   >
                     {/* Thumbnail Image */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 z-10 transition-all duration-500 group-hover:from-black/60 group-hover:via-black/20 group-hover:to-transparent" />
