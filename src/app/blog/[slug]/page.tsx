@@ -685,6 +685,7 @@ const BlogPostPage: FC<PageProps> = ({ params }) => {
       <div className="absolute top-0 bottom-0 bg-white z-10 w-px h-full opacity-30" style={{ left: '8%' }}></div>
       <div className="absolute top-0 bottom-0 bg-white z-10 w-px h-full opacity-30" style={{ right: '8%' }}></div>
 
+      <div className="rail-safe">
       {/* Hero Section */}
       <section className="relative pt-24 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
@@ -814,6 +815,7 @@ const BlogPostPage: FC<PageProps> = ({ params }) => {
           </p>
         </div>
       </footer>
+      </div>
     </div>
   );
 };

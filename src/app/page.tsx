@@ -241,6 +241,7 @@ const Home: FC<{}> = () => {
       <div className="absolute top-0 bottom-0 bg-white z-10 line-3 h-full"></div>
       <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-2"></div>
 
+      <div className="rail-safe">
       <section
         id="home"
         className="relative h-[950px] flex flex-col items-center justify-center py-10 md:py-0"
@@ -352,7 +353,7 @@ const Home: FC<{}> = () => {
           </p>
         </FadeInOnLoad>
 
-        <FadeInOnLoad delay={0.5} className="absolute bottom-4 left-4 flex flex-col space-y-2">
+        <FadeInOnLoad delay={0.5} className="hero-social-rail absolute bottom-4 left-4 flex flex-col space-y-2">
 
           <div
 
@@ -1089,6 +1090,7 @@ const Home: FC<{}> = () => {
           </p>
         </ScrollReveal>
       </footer>
+      </div>
 
     </main>
   );

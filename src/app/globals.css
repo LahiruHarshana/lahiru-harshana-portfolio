@@ -660,6 +660,40 @@ body {
   }
 }
 
+/* Content stays inside 8% side rails on tablet/mobile */
+@media (max-width: 1023px) {
+  .rail-safe {
+    padding-left: calc(8% + 14px);
+    padding-right: calc(8% + 14px);
+  }
+
+  .rail-safe section,
+  .rail-safe footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .rail-safe .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .line-6,
+  .line-10,
+  .line-12,
+  .line-14 {
+    display: none;
+  }
+
+  .nav-hamburger-rail {
+    right: calc(8% + 12px);
+  }
+
+  .hero-social-rail {
+    left: calc(8% + 12px);
+  }
+}
+
 /* About Me portrait — modern static frame, scroll reveal, hover zoom */
 .about-portrait-root {
   position: relative;

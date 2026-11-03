@@ -12,7 +12,7 @@ const HamburgerButton: FC<HamburgerButtonProps> = ({ onClick, isOpen }) => {
   return (
     <button
       onClick={onClick}
-      className="fixed top-6 right-6 z-[997] w-14 h-14 flex flex-col items-center justify-center nav-surface rounded-xl hover:border-gray-400 transition-all duration-300 group"
+      className="fixed top-6 right-6 z-[997] w-14 h-14 flex flex-col items-center justify-center nav-surface rounded-xl hover:border-gray-400 transition-all duration-300 group nav-hamburger-rail"
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
       aria-expanded={isOpen}
     >
