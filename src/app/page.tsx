@@ -9,12 +9,12 @@ import Image from 'next/image';
 import { FaFacebook, FaLinkedin, FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FiLayers, FiServer, FiLayout, FiSmartphone, FiShield, FiCloud } from 'react-icons/fi';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 import SlideMenu from './components/SlideMenu';
 import HamburgerButton from './components/HamburgerButton';
+import AboutPortrait from './components/AboutPortrait';
 import {
   ScrollReveal,
-  ParallaxLayer,
   StaggerContainer,
   StaggerItem,
   FadeInOnLoad,
@@ -64,101 +64,6 @@ interface BlogPost {
   date: string;
   category: string;
 }
-
-// 3D Parallax Image Container Component
-const ParallaxImageContainer: FC = () => {
-  const containerRef = React.useRef<HTMLDivElement>(null);
-
-  // Motion values for mouse position
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Spring config for smooth animation
-  const springConfig = { damping: 25, stiffness: 150 };
-
-  // Transform mouse position to rotation/translation values for each layer
-  // Layer 1: Portrait Image - moves slightly in opposite direction
-  const imageX = useSpring(useTransform(mouseX, [-0.5, 0.5], [15, -15]), springConfig);
-  const imageY = useSpring(useTransform(mouseY, [-0.5, 0.5], [15, -15]), springConfig);
-
-  // Layer 2: White Diamond Frame - moves more in the same direction as mouse
-  const diamondX = useSpring(useTransform(mouseX, [5, 15], [-180, 20]), springConfig);
-  const diamondY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-420, 20]), springConfig);
-  const diamondRotate = useSpring(useTransform(mouseX, [-0.5, 0.5], [42, 48]), springConfig);
-
-  // Layer 3: Grey Square Frame - moves slower, opposite direction
-  const squareX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-350, -10]), springConfig);
-  const squareY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-380, -10]), springConfig);
-  const squareRotate = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    // Normalize mouse position to -0.5 to 0.5 range
-    const normalizedX = (e.clientX - centerX) / rect.width;
-    const normalizedY = (e.clientY - centerY) / rect.height;
-
-    mouseX.set(normalizedX);
-    mouseY.set(normalizedY);
-  };
-
-  const handleMouseLeave = () => {
-    // Reset to center position
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  return (
-    <div
-      ref={containerRef}
-      className="parallax-container"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* White Diamond Frame - Background layer */}
-      <motion.div
-        className="parallax-diamond-frame"
-        style={{
-          x: diamondX,
-          y: diamondY,
-          rotate: diamondRotate
-        }}
-      />
-
-      {/* Grey Square Frame - Middle layer */}
-      <motion.div
-        className="parallax-square-frame"
-        style={{
-          x: squareX,
-          y: squareY,
-          rotate: squareRotate
-        }}
-      />
-
-      {/* Portrait Image - Foreground layer */}
-      <motion.div
-        className="parallax-portrait"
-        style={{
-          x: imageX,
-          y: imageY
-        }}
-      >
-        <Image
-          src="/dp.png"
-          alt="Lahiru Harshana - Software Engineer"
-          width={280}
-          height={360}
-          className="portrait-image"
-          style={{ objectFit: 'cover', objectPosition: 'center top' }}
-        />
-      </motion.div>
-    </div>
-  );
-};
 
 const Home: FC<{}> = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -525,9 +430,9 @@ const Home: FC<{}> = () => {
       <section id="about" className="relative text-white py-16 md:py-24">
         <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center">
           {/* Left Side - Image with 3D Parallax Effect */}
-          <ParallaxLayer speed={0.15} className="relative w-full lg:w-1/2 flex justify-center mb-12 lg:mb-0">
-            <ParallaxImageContainer />
-          </ParallaxLayer>
+          <div className="relative w-full lg:w-1/2 flex justify-center mb-12 lg:mb-0">
+            <AboutPortrait />
+          </div>
 
           <div className="absolute top-0 bottom-0 bg-white z-10 line-6 h-full"></div>
 
