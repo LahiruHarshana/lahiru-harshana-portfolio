@@ -690,7 +690,39 @@ body {
   }
 
   .hero-social-rail {
-    left: calc(8% + 12px);
+    position: static;
+    left: auto;
+    bottom: auto;
+    align-items: center;
+    margin-top: 2rem;
+    width: 100%;
+  }
+
+  .hero-social-label,
+  .hero-social-connector {
+    display: none;
+  }
+
+  .hero-social-icons {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .hero-social-icons .social-link-btn {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-social-rail {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    width: auto;
+    margin-top: 0;
+    align-items: flex-start;
   }
 }
 

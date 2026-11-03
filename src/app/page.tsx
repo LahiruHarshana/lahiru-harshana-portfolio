@@ -346,71 +346,43 @@ const Home: FC<{}> = () => {
           </motion.div>
         </div>
 
+        <FadeInOnLoad delay={0.5} className="hero-social-rail flex flex-col space-y-2">
+          <div
+            className="hero-social-label"
+            style={{
+              fontFamily: 'Oswald, sans-serif',
+              color: '#888',
+              position: 'absolute',
+              left: '-10px',
+              top: '-135px',
+              letterSpacing: '5px',
+              writingMode: 'vertical-rl',
+              textTransform: 'uppercase',
+            }}
+          >
+            SOCIAL
+          </div>
+          <div className="hero-social-connector absolute left-2 top-[-55px] w-px h-10 bg-white line-4" />
+          <div className="hero-social-icons flex flex-col space-y-2">
+            {socialLinks.map((social) => (
+              <Link
+                key={social.id}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link-btn mb-4"
+              >
+                {social.icon}
+              </Link>
+            ))}
+          </div>
+        </FadeInOnLoad>
+
         <FadeInOnLoad delay={0.6} className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 text-center w-full px-4 
                       md:left-auto md:right-20 md:-translate-x-0 md:text-right md:w-auto md:px-0 z-20">
           <p className="text-xs sm:text-sm md:text-base font-normal text-gray-300">
             Software Engineer & Full-Stack Developer
           </p>
-        </FadeInOnLoad>
-
-        <FadeInOnLoad delay={0.5} className="hero-social-rail absolute bottom-4 left-4 flex flex-col space-y-2">
-
-          <div
-
-            style={{
-
-              fontFamily: 'Oswald, sans-serif',
-
-              color: '#888',
-
-              position: 'absolute',
-
-              left: '-10px',
-
-              top: '-135px',
-
-              letterSpacing: '5px',
-
-              writingMode: 'vertical-rl',
-
-              textTransform: 'uppercase',
-
-            }}
-
-          >
-
-            SOCIAL
-
-          </div>
-
-          <div className="absolute left-2 top-[-55px] w-px h-10 bg-white line-4"></div>
-
-          <div className="flex flex-col space-y-2">
-
-            {socialLinks.map((social) => (
-
-              <Link
-
-                key={social.id}
-
-                href={social.href}
-
-                target="_blank"
-
-                rel="noopener noreferrer"
-
-                className="social-link-btn mb-4"
-
-              >
-
-                {social.icon}
-
-              </Link>
-
-            ))}
-
-          </div>
-
         </FadeInOnLoad>
       </section>
       <div className="absolute left-0 right-0 h-0.5 bg-white z-10 line-5"></div>

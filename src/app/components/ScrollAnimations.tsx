@@ -206,7 +206,7 @@ export function StaggerContainer({
   once = false,
 }: StaggerContainerProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, amount: 0.2 });
+  const isInView = useInView(ref, { once, amount: 'some' });
 
   return (
     <motion.div
